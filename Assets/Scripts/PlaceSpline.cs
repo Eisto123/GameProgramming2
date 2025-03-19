@@ -4,11 +4,13 @@ using System.Linq;
 using Unity.Mathematics;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Splines;
 
 public class PlaceSpline : MonoBehaviour
 {
     public bool isVisualizing = false;
+    public bool isTilting = false;
     [SerializeField] private SplineContainer splineContainer;
 
     [SerializeField] private int splineIndex;
@@ -24,13 +26,19 @@ public class PlaceSpline : MonoBehaviour
     [SerializeField]private float roadWidth;
     public float resolution;
     [SerializeField]private MeshFilter meshFilter;
+    private MeshCollider meshCollider;
 
     public int randomRange;
+
+    public GameObject carPrefab;
+
+    public UnityEvent OnGenerationComplete;
 
 
     // Start is called before the first frame update
     void Start()
     {
+        meshCollider = GetComponent<MeshCollider>();
         RandomizeSpline();
         MapKnot();
     }
@@ -44,7 +52,16 @@ public class PlaceSpline : MonoBehaviour
 
     private void GetRightAndLeftPoint(float t,out float3 p1, out float3 p2){
         splineContainer.Evaluate(1, t, out position, out forward, out upVector);
-        float3 rightPoint = Vector3.Cross(forward, upVector).normalized;
+        //splineContainer.Evaluate(1, t +1f/resolution, out float3 nextPosition, out float3 nextForward, out float3 nextUpVector);
+        RaycastHit hit;
+        Vector3 tiltedUpVector = upVector;
+        //Vector3 tiltedUpVector = new Vector3(upVector.x, Vector3.Cross(forward,nextForward - forward).normalized.y, upVector.z);
+        if(isTilting){
+            if(Physics.Raycast(position, Vector3.down, out hit, 1000f)){
+                tiltedUpVector = hit.normal;
+            }
+        }
+        float3 rightPoint = Vector3.Cross(forward, tiltedUpVector).normalized;
         p1 = position + rightPoint * roadWidth;
         p2 = position - rightPoint * roadWidth;
     }
@@ -101,8 +118,7 @@ public class PlaceSpline : MonoBehaviour
         mesh.SetVertices(vertices);
         mesh.SetTriangles(triangles,0);
         meshFilter.mesh = mesh;
-
-        
+        meshCollider.sharedMesh = mesh;
         
     }
 
@@ -138,13 +154,22 @@ public class PlaceSpline : MonoBehaviour
         for(int i = 0; i<knotArray.Length; i++){
             Vector3 position = FindTerrainPosition(knotArray[i].Position);
             if(position != Vector3.zero){
-                knotArray[i].Position = position;
+                Vector3 smoothPosition = i==0? position : Vector3.Lerp(position,knotArray[i-1].Position,0.5f);
+                knotArray[i].Position = smoothPosition;
                 splineContainer.Splines[1].SetKnot(i,knotArray[i]);
             }
             else{
                 Debug.LogError("No terrain found at knot position");
             }
         }
+
+        //mapping complete
+        
+        var car = Instantiate(carPrefab);
+        PlaceCarOnPosition(car, knotArray[0].Position + new float3(0,0.2f,0), knotArray[0].Rotation);
+
+        OnGenerationComplete.Invoke();
+
     }
 
     private Vector3 FindTerrainPosition(Vector3 position){
@@ -163,5 +188,10 @@ public class PlaceSpline : MonoBehaviour
             splineContainer.Evaluate(splineIndex, t, out position, out forward, out upVector);
             splineContainer.Splines[1].Add(position,TangentMode.AutoSmooth);
         }
+    }
+
+    public void PlaceCarOnPosition(GameObject car, Vector3 position, quaternion rotation){
+        car.transform.position = position;
+        car.transform.rotation = rotation;
     }
 }
