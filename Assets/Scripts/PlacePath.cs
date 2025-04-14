@@ -1,0 +1,243 @@
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using Unity.Mathematics;
+using UnityEditor;
+using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.Splines;
+
+public class PlacePath : MonoBehaviour
+{
+    public bool isVisualizing = false;
+    public bool isTilting = false;
+    [SerializeField] private SplineContainer splineContainer;
+
+    [SerializeField] private int splineIndex;
+
+    [SerializeField] [Range(0f,1f)] private float splineTime;
+
+    private float3 position;
+    private float3 forward;
+    private float3 upVector;
+
+    private List<float3> rightPoints;
+    private List<float3> leftPoints;
+    [SerializeField]private float roadWidth;
+    public float resolution;
+    [SerializeField]private MeshFilter meshFilter;
+    private MeshCollider meshCollider;
+
+    public int randomRange;
+
+    public GameObject carPrefab;
+
+    public UnityEvent OnGenerationComplete;
+
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        ResetSplatMap();
+        meshCollider = GetComponent<MeshCollider>();
+        RandomizeSpline();
+        MapKnot();
+    }
+    void Update()
+    {
+    }
+
+    void OnDestroy()
+    {
+        Debug.Log("reset");
+        ResetSplatMap();
+    }
+
+    void OnDrawGizmos()
+    {
+        if (!isVisualizing) return;
+        Handles.matrix = transform.localToWorldMatrix;
+
+        if (rightPoints == null || leftPoints == null) return;
+
+        for (int i = 0; i < rightPoints.Count - 1; i++)
+        {
+            Handles.color = Color.red;
+            Handles.SphereHandleCap(0, rightPoints[i], Quaternion.identity, 0.3f, EventType.Repaint);
+            Handles.color = Color.blue;
+            Handles.SphereHandleCap(0, leftPoints[i], Quaternion.identity, 0.3f, EventType.Repaint);
+        }
+
+        if (knotPositions == null) return;
+
+        for (int i = 0; i < knotPositions.Length; i++)
+        {
+            Gizmos.DrawSphere(knotPositions[i], 0.5f);
+        }
+    }
+
+    private void RandomizeSpline(){
+        var knotArray = splineContainer.Spline.ToArray();
+        for(int i = 0; i<knotArray.Count(); i++){
+            var knot = knotArray[i];
+            knot.Position = knot.Position + new float3(UnityEngine.Random.Range(-randomRange,randomRange),0,UnityEngine.Random.Range(-randomRange,randomRange));
+            
+            splineContainer.Splines[0].SetKnot(i,knot);
+        }
+    }
+
+    Vector3[] knotPositions;
+    private void MapKnot(){
+        SetKnotAmount();
+        var knotArray = splineContainer.Splines[1].ToArray();
+        knotPositions = new Vector3[knotArray.Length];
+        for(int i = 0; i<knotArray.Length; i++){
+            Vector3 position = FindTerrainPosition(knotArray[i].Position);
+            if(position != Vector3.zero){
+                Vector3 smoothPosition = i==0? position : Vector3.Lerp(position,knotArray[i-1].Position,0.5f);
+                knotArray[i].Position = smoothPosition;
+                knotPositions[i] = smoothPosition;
+                splineContainer.Splines[1].SetKnot(i,knotArray[i]);
+            }
+            else{
+                Debug.LogError("No terrain found at knot position");
+            }
+        }
+
+        // map to terrain heightmap
+        Debug.Log(knotPositions.Length);
+        PaintPathOnTerrain(knotPositions);
+
+        //mapping complete
+        
+        //var car = Instantiate(carPrefab);
+        //PlaceCarOnPosition(car, knotArray[0].Position + new float3(0,0.2f,0), knotArray[0].Rotation);
+
+        //OnGenerationComplete.Invoke();
+
+    }
+
+    public Terrain terrain;
+    public int pathTextureIndex = 1; // the layer of the path
+    public float brushSize = 2f;
+    public AnimationCurve blur;
+
+    private void ResetSplatMap()
+    {
+        TerrainData terrainData = terrain.terrainData;
+        int mapWidth = terrainData.alphamapWidth;
+        int mapHeight = terrainData.alphamapHeight;
+        int numTextures = terrainData.alphamapLayers;
+        float[,,] splatmapData = terrainData.GetAlphamaps(0, 0, mapWidth, mapHeight);
+
+        for (int x = 0; x < mapWidth; x++)
+        {
+            for (int y = 0; y < mapHeight; y++)
+            {
+                for (int i = 0; i < numTextures; i++)
+                    splatmapData[x, y, i] = (i == 0) ? 1 : 0;
+            }
+        }
+
+        terrainData.SetAlphamaps(0, 0, splatmapData);
+    }
+
+    void PaintPathOnTerrain(Vector3[] pathPoints)
+    {
+        TerrainData terrainData = terrain.terrainData;
+        int mapWidth = terrainData.alphamapWidth;
+        int mapHeight = terrainData.alphamapHeight;
+        int numTextures = terrainData.alphamapLayers;
+
+        Debug.Log(mapWidth+" "+mapHeight);
+        Debug.Log("numTextures "+numTextures);
+
+        float[,,] splatmapData = terrainData.GetAlphamaps(0, 0, mapWidth, mapHeight);
+        int radius = Mathf.RoundToInt(brushSize / terrainData.size.x * mapWidth);
+
+        foreach (Vector3 worldPos in pathPoints)
+        {
+            Vector3 terrainPos = FindTerrainHeightmapPoint(worldPos, terrain, mapWidth, mapHeight);
+            
+            Debug.Log(worldPos+" "+terrainPos);
+            Debug.Log("r "+radius);
+            int centerX = Mathf.RoundToInt(terrainPos.x);
+            int centerY = Mathf.RoundToInt(terrainPos.z);
+
+            for (int y = -radius; y <= radius; y++)
+            {
+                for (int x = -radius; x <= radius; x++)
+                {
+                    int finalX = centerX+x;
+                    int finalY = centerY+y;
+
+                    if (finalX < 0 || finalY < 0 || finalX >= mapWidth || finalY >= mapHeight)
+                        continue;
+
+                    float dist = Mathf.Sqrt(x * x + y * y) / radius;
+                    dist = Mathf.Clamp(dist,0f,1f);
+                    //float strength = Mathf.SmoothStep(1f, 0f, dist);
+                    float strength = Mathf.Lerp(0, 1, blur.Evaluate(dist));
+                    Debug.Log("s "+strength);
+
+                    /*float[] weights = new float[numTextures];
+                    for (int i = 0; i < numTextures; i++)
+                        weights[i] = (i == pathTextureIndex) ? strength : 1-strength;
+
+                    for (int i = 0; i < numTextures; i++)
+                        splatmapData[finalY, finalX, i] = weights[i];*/
+
+                    float[] currentWeights = new float[numTextures];
+                    for (int i = 0; i < numTextures; i++)
+                        currentWeights[i] = splatmapData[finalY, finalX, i];
+                    
+                    float[] newWeights = new float[numTextures];
+                    for (int i = 0; i < numTextures; i++)
+                    {
+                        float target = (i == pathTextureIndex) ? 1f : 0f;
+                        newWeights[i] = Mathf.Lerp(currentWeights[i], target, strength);
+                    }
+
+                    // normalize the weight
+                    float sum = newWeights.Sum();
+                    for (int i = 0; i < numTextures; i++)
+                        splatmapData[finalY, finalX, i] = newWeights[i] / sum;
+                }
+            }
+        }
+
+        terrainData.SetAlphamaps(0, 0, splatmapData);
+    }
+
+    private Vector3 FindTerrainPosition(Vector3 position){
+        RaycastHit hit;
+        if(Physics.Raycast(position, Vector3.down, out hit, 1000f)){
+            return hit.point;
+        }
+        Debug.LogError("No terrain hit");
+        return Vector3.zero;
+    }
+
+    private void SetKnotAmount(){
+        float step = 1f/resolution;
+        for(int i = 0; i<resolution; i++){
+            float t = i * step;
+            splineContainer.Evaluate(splineIndex, t, out position, out forward, out upVector);
+            splineContainer.Splines[1].Add(position,TangentMode.AutoSmooth);
+        }
+    }
+
+    private Vector3 FindTerrainHeightmapPoint(Vector3 worldPos, Terrain terrain, int mapWidth, int mapHeight)
+    {
+        Vector3 terrainPos = worldPos - terrain.transform.position;
+        float normX = terrainPos.x / terrain.terrainData.size.x;
+        float normZ = terrainPos.z / terrain.terrainData.size.z;
+        //Debug.Log(normX+" "+normZ);
+        return new Vector3(normX * mapWidth, 0, normZ * mapHeight);
+    }
+
+    public void PlaceCarOnPosition(GameObject car, Vector3 position, quaternion rotation){
+        car.transform.position = position;
+        car.transform.rotation = rotation;
+    }
+}
