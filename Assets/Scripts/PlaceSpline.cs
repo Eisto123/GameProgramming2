@@ -32,7 +32,7 @@ public class PlaceSpline : MonoBehaviour
 
     public GameObject carPrefab;
 
-    public UnityEvent OnGenerationComplete;
+    public UnityEvent<Vector3[]> OnGenerationComplete;
 
 
     // Start is called before the first frame update
@@ -168,7 +168,12 @@ public class PlaceSpline : MonoBehaviour
         var car = Instantiate(carPrefab);
         PlaceCarOnPosition(car, knotArray[0].Position + new float3(0,0.2f,0), knotArray[0].Rotation);
 
-        OnGenerationComplete.Invoke();
+        Vector3[] knotPositions = new Vector3[knotArray.Length];
+        for(int i = 0; i<knotArray.Length; i++){
+            Vector3 position = knotArray[i].Position;
+            knotPositions[i] = position;
+        }
+        OnGenerationComplete.Invoke(knotPositions);
 
     }
 
@@ -194,4 +199,6 @@ public class PlaceSpline : MonoBehaviour
         car.transform.position = position;
         car.transform.rotation = rotation;
     }
+
+
 }
