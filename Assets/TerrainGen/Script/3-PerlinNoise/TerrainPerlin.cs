@@ -1,14 +1,7 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Numerics;
+
 using System.Diagnostics;
-using Unity.Mathematics;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Rendering.Universal.Internal;
-using UnityEngine.UIElements;
+using UnityEditor;
 
 public class TerrainPerlin : MonoBehaviour
 {
@@ -33,7 +26,7 @@ public class TerrainPerlin : MonoBehaviour
 
     void Start()
     {
-        
+        StartGenerate();
     }
 
     public void StartGenerate()
@@ -204,5 +197,21 @@ public class PerlinNoise
             Grad(permutation512[hashLB + 1], x, y - 1),
             Grad(permutation512[hashRB + 1], x - 1, y - 1), u
         ), v) + 1) * 0.5f;
+    }
+}
+
+[CustomEditor(typeof(TerrainPerlin))]
+public class TerrainPerlinEditor : Editor
+{
+    public override void OnInspectorGUI()
+    {
+        DrawDefaultInspector();
+
+        TerrainPerlin terrainPerlin = (TerrainPerlin)target;
+
+        if (GUILayout.Button("Start Generate"))
+        {
+            terrainPerlin.StartGenerate();
+        }
     }
 }

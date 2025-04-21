@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 803c51c95a6150042a8438f277c2902a, type: 3}
+  m_Name: Temperate
+  m_EditorClassIdentifier: 
+  biomeType: 1
+  treePrefabs:
+  - {fileID: 919132149155446097, guid: 02d50efdb9fc3924b9664b2ff0000854, type: 3}
+  - {fileID: 919132149155446097, guid: 4b2c679d1b894a3439451f80ebe2fe84, type: 3}
+  - {fileID: 919132149155446097, guid: 8632d2dddeec6564191e88c2db33090f, type: 3}
+  - {fileID: 919132149155446097, guid: 90c89f0b5495e004da64ecf02259fb53, type: 3}
+  - {fileID: 919132149155446097, guid: a9f7ef95754a34046a561691c52f90b3, type: 3}
+  - {fileID: 919132149155446097, guid: 49e527856b011d54f8e1e75227fcba82, type: 3}
+  - {fileID: 919132149155446097, guid: 85bdcb48992742f45b63c3a0b01781b0, type: 3}
+  grassPrefab: {fileID: 4402088182631710108, guid: 88fc898e808eee647b6ccf366f4d0466,
+    type: 3}
+  plantPrefabs:
+  - {fileID: 919132149155446097, guid: 8c2ddf39f0990e7488e1cfb4f6ef4476, type: 3}
+  - {fileID: 919132149155446097, guid: 841f80a8f73e32c46a2488ec27c052fb, type: 3}
+  - {fileID: 919132149155446097, guid: 7ff460ec460874549be004adb2a16a40, type: 3}
+  - {fileID: 919132149155446097, guid: 10efcfcf54f3efb48974d256f28dcf6e, type: 3}
+  - {fileID: 919132149155446097, guid: 0e024ffa50ad92f4f9411ae4b54ec97b, type: 3}
+  - {fileID: 919132149155446097, guid: f18c49ee0523a334db7e4cd28159fc84, type: 3}
+  - {fileID: 919132149155446097, guid: e8b7e9b9b98517d45854b4a7f772e5f5, type: 3}
+  - {fileID: 919132149155446097, guid: b2c479269330c2848adfc1b318fec5a7, type: 3}
+  - {fileID: 919132149155446097, guid: 60ce3a1e0d774ca41a5e366321f614d6, type: 3}
+  - {fileID: 919132149155446097, guid: 68bb1585b91ea59468cf0d3c82d6aa2b, type: 3}
+  - {fileID: 919132149155446097, guid: 66d6fdc7ea959344f8aff0da9679e337, type: 3}
+  - {fileID: 919132149155446097, guid: 9867f6bb7767b8042a1c896cbca54e97, type: 3}
+  - {fileID: 919132149155446097, guid: c351a13dc6271fd4d803dfb621d43b15, type: 3}
+  - {fileID: 919132149155446097, guid: d2c66b9cb9a099142b5e1993daee22c2, type: 3}
+  rockPrefabs: []
+  treeColor: {r: 0, g: 0, b: 0, a: 0}
+  grassMat: {fileID: 0}
+  treeDensity: 0.4
+  grassDensity: 0.54
+  plantDensity: 0.689

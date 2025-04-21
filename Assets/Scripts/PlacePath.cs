@@ -34,6 +34,8 @@ public class PlacePath : MonoBehaviour
 
     public UnityEvent OnGenerationComplete;
 
+    private float[,] origHeightMap;
+
 
     // Start is called before the first frame update
     void Start()
@@ -51,6 +53,7 @@ public class PlacePath : MonoBehaviour
     {
         Debug.Log("reset");
         ResetSplatMap();
+        terrain.terrainData.SetHeights(0, 0, origHeightMap);
     }
 
     void OnDrawGizmos()
@@ -87,6 +90,17 @@ public class PlacePath : MonoBehaviour
     }
 
     Vector3[] knotPositions;
+
+    public Vector3[] GetKnotPositions()
+    {
+        return knotPositions;
+    }
+
+    public float GetPathRadius()
+    {
+        return Mathf.RoundToInt(brushSize / terrain.terrainData.size.x * terrain.terrainData.alphamapWidth);
+    }
+
     private void MapKnot(){
         SetKnotAmount();
         var knotArray = splineContainer.Splines[1].ToArray();
@@ -117,6 +131,7 @@ public class PlacePath : MonoBehaviour
 
     }
 
+    [Header("Terrain Path Setting")]
     public Terrain terrain;
     public int pathTextureIndex = 1; // the layer of the path
     public float brushSize = 2f;
@@ -147,22 +162,32 @@ public class PlacePath : MonoBehaviour
         TerrainData terrainData = terrain.terrainData;
         int mapWidth = terrainData.alphamapWidth;
         int mapHeight = terrainData.alphamapHeight;
+        int heightresolution = terrainData.heightmapResolution;
         int numTextures = terrainData.alphamapLayers;
+        Debug.Log("heightresolution "+heightresolution);
 
         Debug.Log(mapWidth+" "+mapHeight);
-        Debug.Log("numTextures "+numTextures);
+        //Debug.Log("numTextures "+numTextures);
 
         float[,,] splatmapData = terrainData.GetAlphamaps(0, 0, mapWidth, mapHeight);
+        float[,] heightMap = terrainData.GetHeights(0,0,heightresolution,heightresolution);
+        origHeightMap = terrain.terrainData.GetHeights(0,0,heightresolution,heightresolution);
+
         int radius = Mathf.RoundToInt(brushSize / terrainData.size.x * mapWidth);
+        int heightRadius = Mathf.RoundToInt(brushSize / terrainData.size.x * heightresolution);
 
         foreach (Vector3 worldPos in pathPoints)
         {
             Vector3 terrainPos = FindTerrainHeightmapPoint(worldPos, terrain, mapWidth, mapHeight);
-            
-            Debug.Log(worldPos+" "+terrainPos);
-            Debug.Log("r "+radius);
+            //Vector3 heightPos = FindTerrainHeightmapPoint(worldPos, terrain, heightresolution, heightresolution);
+            //Debug.Log("height position: "+heightPos);
+
+            //Debug.Log(worldPos+" "+terrainPos);
+            //Debug.Log("r "+radius);
             int centerX = Mathf.RoundToInt(terrainPos.x);
             int centerY = Mathf.RoundToInt(terrainPos.z);
+            float height = origHeightMap[centerX, centerY];
+            //Debug.Log("height: "+height);
 
             for (int y = -radius; y <= radius; y++)
             {
@@ -174,11 +199,13 @@ public class PlacePath : MonoBehaviour
                     if (finalX < 0 || finalY < 0 || finalX >= mapWidth || finalY >= mapHeight)
                         continue;
 
+                    heightMap[finalY, finalX] = height;
+
                     float dist = Mathf.Sqrt(x * x + y * y) / radius;
                     dist = Mathf.Clamp(dist,0f,1f);
                     //float strength = Mathf.SmoothStep(1f, 0f, dist);
                     float strength = Mathf.Lerp(0, 1, blur.Evaluate(dist));
-                    Debug.Log("s "+strength);
+                    //Debug.Log("s "+strength);
 
                     /*float[] weights = new float[numTextures];
                     for (int i = 0; i < numTextures; i++)
@@ -204,8 +231,18 @@ public class PlacePath : MonoBehaviour
                         splatmapData[finalY, finalX, i] = newWeights[i] / sum;
                 }
             }
+
+            // for (int y = -heightRadius; y <= heightRadius; y++)
+            //     for (int x = -heightRadius; x <= heightRadius; x++)
+            //     {
+            //         int finalX = centerX+x;
+            //         int finalY = centerY+y;
+
+            //         heightMap[finalY, finalX] = height;
+            //     }
         }
 
+        terrainData.SetHeights(0, 0, heightMap);
         terrainData.SetAlphamaps(0, 0, splatmapData);
     }
 

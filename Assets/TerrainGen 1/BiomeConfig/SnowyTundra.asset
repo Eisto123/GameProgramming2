@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 803c51c95a6150042a8438f277c2902a, type: 3}
+  m_Name: SnowyTundra
+  m_EditorClassIdentifier: 
+  biomeType: 0
+  treePrefabs:
+  - {fileID: 919132149155446097, guid: 46e5ac46bb94d1f4a81350feb3477394, type: 3}
+  - {fileID: 919132149155446097, guid: 5320d0e6b18930544a58c1a64f0b9f39, type: 3}
+  - {fileID: 919132149155446097, guid: b9517263227435f44a83a95fb366e30c, type: 3}
+  - {fileID: 919132149155446097, guid: 6c532a42897eb974a9a5e103fbdccb41, type: 3}
+  - {fileID: 919132149155446097, guid: a894d977b3ccd7c4c91d2fa275126cbb, type: 3}
+  - {fileID: 919132149155446097, guid: 891055a7945571f48ab9bf1872959980, type: 3}
+  - {fileID: 919132149155446097, guid: ad997ac4e4eb48348bff0bc6e72c1478, type: 3}
+  - {fileID: 919132149155446097, guid: 7f79e38b7672bec44a0e41e8cc4114ab, type: 3}
+  - {fileID: 919132149155446097, guid: 8df7de26e8d731f46974c5f935cc733f, type: 3}
+  - {fileID: 919132149155446097, guid: a159ebd1ae5a44a4c9a0223965f4cd71, type: 3}
+  grassPrefab: {fileID: 8532779950066248623, guid: 2d245dfa5afa063478ad8bc060f206cf,
+    type: 3}
+  plantPrefabs:
+  - {fileID: 919132149155446097, guid: 67702414e2d8b4544be6bde158567641, type: 3}
+  - {fileID: 919132149155446097, guid: 0e024ffa50ad92f4f9411ae4b54ec97b, type: 3}
+  - {fileID: 919132149155446097, guid: e284aa0568adddb4aaf7b44ed5e4cff7, type: 3}
+  - {fileID: 919132149155446097, guid: b2c479269330c2848adfc1b318fec5a7, type: 3}
+  - {fileID: 919132149155446097, guid: e8b7e9b9b98517d45854b4a7f772e5f5, type: 3}
+  - {fileID: 919132149155446097, guid: 7ff460ec460874549be004adb2a16a40, type: 3}
+  rockPrefabs: []
+  treeColor: {r: 0, g: 0, b: 0, a: 0}
+  grassMat: {fileID: 0}
+  treeDensity: 0
+  grassDensity: 0.281
+  plantDensity: 0.282
