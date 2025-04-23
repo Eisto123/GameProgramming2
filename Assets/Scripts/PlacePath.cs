@@ -111,9 +111,11 @@ public class PlacePath : MonoBehaviour
         for(int i = 0; i<knotArray.Length; i++){
             Vector3 position = FindTerrainPosition(knotArray[i].Position);
             if(position != Vector3.zero){
-                Vector3 smoothPosition = i==0? position : Vector3.Lerp(position,knotArray[i-1].Position,0.5f);
-                knotArray[i].Position = smoothPosition;
-                knotPositions[i] = smoothPosition;
+                //Vector3 smoothPosition = i==0? position : Vector3.Lerp(position,knotArray[i-1].Position,0.5f);
+                //knotArray[i].Position = smoothPosition;
+                //knotPositions[i] = smoothPosition;
+                knotPositions[i] = position;
+                knotArray[i].Position = position;
                 splineContainer.Splines[1].SetKnot(i,knotArray[i]);
             }
             else{
@@ -126,12 +128,12 @@ public class PlacePath : MonoBehaviour
             PlaceCarOnPosition(car, knotArray[knotArray.Length-1-i].Position + new float3(0,0.2f,0), knotArray[0].Rotation);
         }
 
-        Vector3[] knotPosition = new Vector3[knotArray.Length];
-        for(int i = 0; i<knotArray.Length; i++){
-            Vector3 position = knotArray[i].Position;
-            knotPosition[i] = position;
-        }
-        OnGenerationComplete.Invoke(knotPosition);
+        // Vector3[] knotPosition = new Vector3[knotArray.Length];
+        // for(int i = 0; i<knotArray.Length; i++){
+        //     Vector3 position = knotArray[i].Position;
+        //     knotPosition[i] = position;
+        // }
+        OnGenerationComplete.Invoke(knotPositions);
 
         // map to terrain heightmap
         Debug.Log(knotPositions.Length);

@@ -209,8 +209,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 58481664}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.22975299, y: -0.0000000023087583, z: 5.45024e-10, w: 0.973249}
-  m_LocalPosition: {x: 0, y: 0.5, z: -14.12}
+  m_LocalRotation: {x: 0.38268337, y: 0.000000092516714, z: -0.000000038321666, w: 0.92387956}
+  m_LocalPosition: {x: 0, y: 2, z: -15.12}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -364,8 +364,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 483913737}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.22975296, y: -0.0000000021942823, z: 6.009713e-11, w: 0.973249}
-  m_LocalPosition: {x: 0, y: 0.5, z: -14.12}
+  m_LocalRotation: {x: 0.38268337, y: 0.000000092516714, z: -0.000000038321666, w: 0.92387956}
+  m_LocalPosition: {x: 0, y: 2, z: -15.12}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -537,7 +537,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 1
-  m_FollowOffset: {x: 0, y: 0.5, z: -1}
+  m_FollowOffset: {x: 0, y: 2, z: -2}
   m_XDamping: 1
   m_YDamping: 1
   m_ZDamping: 1
@@ -696,7 +696,7 @@ PrefabInstance:
     - target: {fileID: 799787186215898402, guid: ea44af03172df72448318fc7591110d8,
         type: 3}
       propertyPath: m_Splines.Array.data[0].m_Knots.Array.data[0].Position.y
-      value: 4.17
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 799787186215898402, guid: ea44af03172df72448318fc7591110d8,
         type: 3}
@@ -816,23 +816,23 @@ PrefabInstance:
     - target: {fileID: 799787186215898402, guid: ea44af03172df72448318fc7591110d8,
         type: 3}
       propertyPath: m_Splines.Array.data[0].m_Knots.Array.data[4].Rotation.value.w
-      value: 0.8917976
+      value: 0.89179754
       objectReference: {fileID: 0}
     - target: {fileID: 799787186215898402, guid: ea44af03172df72448318fc7591110d8,
         type: 3}
       propertyPath: m_Splines.Array.data[0].m_Knots.Array.data[4].Rotation.value.y
-      value: -0.45243463
+      value: -0.45243466
       objectReference: {fileID: 0}
     - target: {fileID: 1740698142288539263, guid: ea44af03172df72448318fc7591110d8,
         type: 3}
       propertyPath: carAmount
-      value: 4
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1740698142288539263, guid: ea44af03172df72448318fc7591110d8,
         type: 3}
       propertyPath: carPrefab
       value: 
-      objectReference: {fileID: 940867531459638963, guid: c03a360052caf8a4a99fda4d09c0387e,
+      objectReference: {fileID: 2292858064513078187, guid: e0987a45938639644a213a10373dff69,
         type: 3}
     - target: {fileID: 1740698142288539263, guid: ea44af03172df72448318fc7591110d8,
         type: 3}
@@ -904,12 +904,12 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Mesh
       value: 
-      objectReference: {fileID: 4300000, guid: 45340669cbbd1cf47a78dc270b512080, type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 5881330000617076890, guid: ea44af03172df72448318fc7591110d8,
         type: 3}
       propertyPath: m_Mesh
       value: 
-      objectReference: {fileID: 4300000, guid: 45340669cbbd1cf47a78dc270b512080, type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 7966153049419026500, guid: ea44af03172df72448318fc7591110d8,
         type: 3}
       propertyPath: m_Name
@@ -918,60 +918,8 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 7966153049419026500, guid: ea44af03172df72448318fc7591110d8,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1053990661}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ea44af03172df72448318fc7591110d8, type: 3}
---- !u!1 &1053990659 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7966153049419026500, guid: ea44af03172df72448318fc7591110d8,
-    type: 3}
-  m_PrefabInstance: {fileID: 1053990658}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1053990660 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 799787186215898402, guid: ea44af03172df72448318fc7591110d8,
-    type: 3}
-  m_PrefabInstance: {fileID: 1053990658}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1053990659}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dab5c7d4c32e743048dfca98e2d5914f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1053990661
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1053990659}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 222dc08d484f16869bdd89edd9d368fc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Container: {fileID: 1053990660}
-  m_RebuildOnSplineChange: 0
-  m_RebuildFrequency: 30
-  m_UpdateColliders: 1
-  m_Sides: 8
-  m_SegmentsPerUnit: 4
-  m_Capped: 0
-  m_Radius: 2
-  m_Range: {x: 0, y: 1}
-  m_FlipNormals: 0
-  m_Shape:
-    rid: 4136732712864055303
-  references:
-    version: 2
-    RefIds:
-    - rid: 4136732712864055303
-      type: {class: Road, ns: UnityEngine.Splines.ExtrusionShapes, asm: Unity.Splines}
-      data: 
 --- !u!1 &1567370956
 GameObject:
   m_ObjectHideFlags: 0
@@ -1237,7 +1185,7 @@ PrefabInstance:
     - target: {fileID: 940867531459638963, guid: c03a360052caf8a4a99fda4d09c0387e,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6180101726417923828, guid: c03a360052caf8a4a99fda4d09c0387e,
         type: 3}

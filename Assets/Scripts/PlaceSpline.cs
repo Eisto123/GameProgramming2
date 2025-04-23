@@ -155,8 +155,8 @@ public class PlaceSpline : MonoBehaviour
         for(int i = 0; i<knotArray.Length; i++){
             Vector3 position = FindTerrainPosition(knotArray[i].Position);
             if(position != Vector3.zero){
-                Vector3 smoothPosition = i==0? position : Vector3.Lerp(position,knotArray[i-1].Position,0.5f);
-                knotArray[i].Position = smoothPosition;
+                //Vector3 smoothPosition = i==0? position : Vector3.Lerp(position,knotArray[i-1].Position,0.5f);
+                knotArray[i].Position = position;
                 splineContainer.Splines[1].SetKnot(i,knotArray[i]);
             }
             else{
@@ -168,7 +168,7 @@ public class PlaceSpline : MonoBehaviour
         
         for(int i = 0; i<carAmount; i++){
             var car = Instantiate(carPrefab);
-            PlaceCarOnPosition(car, knotArray[knotArray.Length-1-i].Position + new float3(0,0.2f,0), knotArray[0].Rotation);
+            PlaceCarOnPosition(car, knotArray[knotArray.Length-1-i].Position + new float3(0,0.2f,0), knotArray[knotArray.Length-1-i].Rotation);
         }
         
 

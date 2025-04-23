@@ -97,7 +97,7 @@ public class CarControl : MonoBehaviour
         if(verticalInput != 0){
             for (int i = 0; i < 4; i++)
             {
-                wheelColliders[i].motorTorque = totalPower/4;
+                wheelColliders[i].motorTorque =  totalPower/4;
             }
         }else{  
             for (int i = 0; i < 4; i++)

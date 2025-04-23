@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 640d647ed0ffd8142835c8a7d0b148e7, type: 3}
   m_Name: BasicFollowCar
   m_EditorClassIdentifier: 
-  SteerSpeed: 2
+  SteerSpeed: 1
   PowerSpeed: 1
