@@ -136,8 +136,8 @@ public class CarControl : MonoBehaviour
 
     private void CalculateEnginePower(){
         GetWheelRPM();
-        float clampedRPM = Mathf.Clamp(wheelRPM, 0, 1);
-        totalPower = engineCurve.Evaluate(clampedRPM) * verticalInput * maxPower;
+        float normailizedRPM = Mathf.InverseLerp(0, 1, wheelRPM);
+        totalPower = engineCurve.Evaluate(normailizedRPM) * verticalInput * maxPower;
 
         // This is for UI Displaying speed
         float velocity = 0.0f;
@@ -177,6 +177,7 @@ public class CarControl : MonoBehaviour
         }
     }
 
+#region AI
     public void MoveTowardsCurrentTrackPoint(float SteerForce,float PowerForce)
     {
         Vector3 direction = transform.InverseTransformPoint(currentTrackPoint);
@@ -186,11 +187,37 @@ public class CarControl : MonoBehaviour
         verticalInput = PowerForce;
     }
 
+    public void MoveTowardsPoint(Vector3 point, float SteerForce, float PowerForce)
+    {
+        Vector3 direction = transform.InverseTransformPoint(point);
+        direction /= direction.magnitude;
+
+        horizontalInput = direction.x / direction.magnitude * SteerForce;
+        verticalInput = PowerForce;
+    }
+    public bool isCarOnLeftSide()
+    {
+        Vector3 carPosition = transform.position;
+        float minDistance = Mathf.Infinity;
+        Vector3 closestPoint = Vector3.zero;
+
+        for(int i = 0; i < trackPoints.Length; i++)
+        {
+            float distance = Vector3.Distance(carPosition, trackPoints[i]);
+            if (distance < minDistance)
+            {
+                closestPoint = trackPoints[i];
+                minDistance = distance;
+            }
+        }
+
+        return (transform.position.x < closestPoint.x);
+    }
+
     void OnDrawGizmos()
     {
         Gizmos.DrawWireSphere(currentTrackPoint, 0.5f);
     }
-
-
-
+#endregion
 }
+

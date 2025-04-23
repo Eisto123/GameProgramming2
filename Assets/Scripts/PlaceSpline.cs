@@ -31,6 +31,7 @@ public class PlaceSpline : MonoBehaviour
     public int randomRange;
 
     public GameObject carPrefab;
+    public int carAmount;
 
     public UnityEvent<Vector3[]> OnGenerationComplete;
 
@@ -165,8 +166,11 @@ public class PlaceSpline : MonoBehaviour
 
         //mapping complete
         
-        var car = Instantiate(carPrefab);
-        PlaceCarOnPosition(car, knotArray[0].Position + new float3(0,0.2f,0), knotArray[0].Rotation);
+        for(int i = 0; i<carAmount; i++){
+            var car = Instantiate(carPrefab);
+            PlaceCarOnPosition(car, knotArray[knotArray.Length-1-i].Position + new float3(0,0.2f,0), knotArray[0].Rotation);
+        }
+        
 
         Vector3[] knotPositions = new Vector3[knotArray.Length];
         for(int i = 0; i<knotArray.Length; i++){

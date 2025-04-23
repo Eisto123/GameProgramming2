@@ -577,6 +577,7 @@ GameObject:
   - component: {fileID: 743623676}
   - component: {fileID: 743623677}
   - component: {fileID: 743623678}
+  - component: {fileID: 743623679}
   m_Layer: 0
   m_Name: Spline
   m_TagString: Untagged
@@ -774,6 +775,7 @@ MonoBehaviour:
   randomRange: 5
   carPrefab: {fileID: 7040824310856438357, guid: c30468851012a4f4bbef765f4135328a,
     type: 3}
+  carAmount: 0
   OnGenerationComplete:
     m_PersistentCalls:
       m_Calls:
@@ -796,7 +798,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 743623672}
-  m_Mesh: {fileID: 0}
+  m_Mesh: {fileID: 4300000, guid: f06acfec330f19b4b8fa997c7c82d74b, type: 2}
 --- !u!23 &743623677
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -860,7 +862,37 @@ MeshCollider:
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
-  m_Mesh: {fileID: 0}
+  m_Mesh: {fileID: 4300000, guid: f06acfec330f19b4b8fa997c7c82d74b, type: 2}
+--- !u!114 &743623679
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 743623672}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 222dc08d484f16869bdd89edd9d368fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Container: {fileID: 743623673}
+  m_RebuildOnSplineChange: 1
+  m_RebuildFrequency: 30
+  m_UpdateColliders: 1
+  m_Sides: 8
+  m_SegmentsPerUnit: 4
+  m_Capped: 0
+  m_Radius: 2
+  m_Range: {x: 0, y: 1}
+  m_FlipNormals: 0
+  m_Shape:
+    rid: 4136732712864055299
+  references:
+    version: 2
+    RefIds:
+    - rid: 4136732712864055299
+      type: {class: Road, ns: UnityEngine.Splines.ExtrusionShapes, asm: Unity.Splines}
+      data: 
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0

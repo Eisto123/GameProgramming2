@@ -409,17 +409,17 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: fa62b274ee032ba4ebf85d20e4c0be7f,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.5
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: fa62b274ee032ba4ebf85d20e4c0be7f,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.5
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: fa62b274ee032ba4ebf85d20e4c0be7f,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.5
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: fa62b274ee032ba4ebf85d20e4c0be7f,
         type: 3}
@@ -602,7 +602,7 @@ MonoBehaviour:
   - {fileID: 4648601559637274303}
   - {fileID: 4794300219966570198}
   massCenter: {fileID: 4830948596687157085}
-  maxPower: 150
+  maxPower: 500
   steerAngle: 30
   radius: 10
   downForce: 50
@@ -631,7 +631,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  manualDriving: 1
+  manualDriving: 0
   trackPointsEvent: {fileID: 11400000, guid: eecc3af486116f94298de7a7a3f9dccc, type: 2}
   trackPointsOffset: 2
   carAI: {fileID: 11400000, guid: ad4172a9d6b98214dacd532413f2f3ca, type: 2}

@@ -31,10 +31,12 @@ public class PlacePath : MonoBehaviour
     public int randomRange;
 
     public GameObject carPrefab;
+    public int carAmount;
 
-    public UnityEvent OnGenerationComplete;
+    public UnityEvent<Vector3[]> OnGenerationComplete;
 
     private float[,] origHeightMap;
+    private BezierKnot[] knotArray;
 
 
     // Start is called before the first frame update
@@ -103,7 +105,8 @@ public class PlacePath : MonoBehaviour
 
     private void MapKnot(){
         SetKnotAmount();
-        var knotArray = splineContainer.Splines[1].ToArray();
+        //var knotArray = splineContainer.Splines[1].ToArray();
+        knotArray = splineContainer.Splines[1].ToArray();
         knotPositions = new Vector3[knotArray.Length];
         for(int i = 0; i<knotArray.Length; i++){
             Vector3 position = FindTerrainPosition(knotArray[i].Position);
@@ -118,6 +121,18 @@ public class PlacePath : MonoBehaviour
             }
         }
 
+        for(int i = 0; i<carAmount; i++){
+            var car = Instantiate(carPrefab);
+            PlaceCarOnPosition(car, knotArray[knotArray.Length-1-i].Position + new float3(0,0.2f,0), knotArray[0].Rotation);
+        }
+
+        Vector3[] knotPosition = new Vector3[knotArray.Length];
+        for(int i = 0; i<knotArray.Length; i++){
+            Vector3 position = knotArray[i].Position;
+            knotPosition[i] = position;
+        }
+        OnGenerationComplete.Invoke(knotPosition);
+
         // map to terrain heightmap
         Debug.Log(knotPositions.Length);
         PaintPathOnTerrain(knotPositions);
@@ -127,6 +142,7 @@ public class PlacePath : MonoBehaviour
         //var car = Instantiate(carPrefab);
         //PlaceCarOnPosition(car, knotArray[0].Position + new float3(0,0.2f,0), knotArray[0].Rotation);
 
+        
         //OnGenerationComplete.Invoke();
 
     }
@@ -199,7 +215,7 @@ public class PlacePath : MonoBehaviour
                     if (finalX < 0 || finalY < 0 || finalX >= mapWidth || finalY >= mapHeight)
                         continue;
 
-                    heightMap[finalY, finalX] = height;
+                    //heightMap[finalY, finalX] = height;
 
                     float dist = Mathf.Sqrt(x * x + y * y) / radius;
                     dist = Mathf.Clamp(dist,0f,1f);
@@ -241,6 +257,7 @@ public class PlacePath : MonoBehaviour
             //         heightMap[finalY, finalX] = height;
             //     }
         }
+        
 
         terrainData.SetHeights(0, 0, heightMap);
         terrainData.SetAlphamaps(0, 0, splatmapData);
