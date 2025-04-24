@@ -27,6 +27,7 @@ public class PlacePath : MonoBehaviour
     public float resolution;
     [SerializeField]private MeshFilter meshFilter;
     private MeshCollider meshCollider;
+    public SplineContainer Fence;
 
     public int randomRange;
 
@@ -103,13 +104,14 @@ public class PlacePath : MonoBehaviour
         return Mathf.RoundToInt(brushSize / terrain.terrainData.size.x * terrain.terrainData.alphamapWidth);
     }
 
+
     private void MapKnot(){
         SetKnotAmount();
         //var knotArray = splineContainer.Splines[1].ToArray();
         knotArray = splineContainer.Splines[1].ToArray();
         knotPositions = new Vector3[knotArray.Length];
         for(int i = 0; i<knotArray.Length; i++){
-            Vector3 position = FindTerrainPosition(knotArray[i].Position);
+            Vector3 position = FindTerrainPosition(knotArray[i].Position,out RaycastHit hit);
             if(position != Vector3.zero){
                 //Vector3 smoothPosition = i==0? position : Vector3.Lerp(position,knotArray[i-1].Position,0.5f);
                 //knotArray[i].Position = smoothPosition;
@@ -134,6 +136,34 @@ public class PlacePath : MonoBehaviour
         //     knotPosition[i] = position;
         // }
         OnGenerationComplete.Invoke(knotPositions);
+        for(int i = 0; i<knotArray.Length; i++){
+            Vector3 forward;
+            if(i == knotArray.Length-1){
+                forward = knotArray[0].Position - knotArray[i].Position;
+            }else{
+                forward = knotArray[i+1].Position - knotArray[i].Position;
+            }
+            forward.Normalize();
+            Vector3 up = Vector3.up;
+            Vector3 left = Vector3.Cross(forward, up).normalized;
+            Fence.Spline.Add(knotArray[i].Position+(float3)left*GetPathRadius()+new float3(0,100f,0), TangentMode.AutoSmooth);
+        }
+
+        var fenceArray = Fence.Spline.ToArray();
+        for(int i = 0; i<fenceArray.Length; i++){
+            Vector3 position = FindTerrainPosition(fenceArray[i].Position,out RaycastHit hit);
+            if(position != Vector3.zero){
+                fenceArray[i].Position = position;
+                fenceArray[i].Rotation = quaternion.Euler(hit.normal);
+                Fence.Spline.SetKnot(i,fenceArray[i]);
+            }
+            else{
+                Debug.LogError("No terrain found at knot position");
+            }
+        }
+
+        
+
 
         // map to terrain heightmap
         Debug.Log(knotPositions.Length);
@@ -265,8 +295,8 @@ public class PlacePath : MonoBehaviour
         terrainData.SetAlphamaps(0, 0, splatmapData);
     }
 
-    private Vector3 FindTerrainPosition(Vector3 position){
-        RaycastHit hit;
+    private Vector3 FindTerrainPosition(Vector3 position,out RaycastHit hit){
+        
         if(Physics.Raycast(position, Vector3.down, out hit, 1000f)){
             return hit.point;
         }

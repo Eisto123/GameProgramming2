@@ -92,27 +92,27 @@ WheelCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2115678999554110992}
   serializedVersion: 2
-  m_Center: {x: 0, y: 0.15, z: 0}
+  m_Center: {x: -0.08, y: 0.15, z: 0}
   m_Radius: 0.2
   m_SuspensionSpring:
-    spring: 35000
+    spring: 50000
     damper: 4500
     targetPosition: 0.5
   m_SuspensionDistance: 0.3
   m_ForceAppPointDistance: 0
-  m_Mass: 20
+  m_Mass: 70
   m_WheelDampingRate: 0.25
   m_ForwardFriction:
     m_ExtremumSlip: 0.4
     m_ExtremumValue: 1
     m_AsymptoteSlip: 0.8
-    m_AsymptoteValue: 0.5
+    m_AsymptoteValue: 0.7
     m_Stiffness: 1
   m_SidewaysFriction:
     m_ExtremumSlip: 0.2
     m_ExtremumValue: 1
     m_AsymptoteSlip: 0.5
-    m_AsymptoteValue: 0.75
+    m_AsymptoteValue: 0.6
     m_Stiffness: 1
   m_IncludeLayers:
     serializedVersion: 2
@@ -206,10 +206,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.11
-  m_Height: 0.66
+  m_Radius: 0.17
+  m_Height: 0.57
   m_Direction: 0
-  m_Center: {x: 0, y: 0.2, z: 0}
+  m_Center: {x: 0, y: 0.29, z: 0}
 --- !u!1 &2292858064513078187
 GameObject:
   m_ObjectHideFlags: 0
@@ -269,10 +269,10 @@ MonoBehaviour:
   - {fileID: 9177988536433693127}
   - {fileID: 2908480004672892690}
   massCenter: {fileID: 2151739005890202130}
-  maxPower: 1000
-  steerAngle: 45
-  radius: 2
-  downForce: 50
+  maxPower: 1500
+  steerAngle: 30
+  radius: 6
+  downForce: 70
   smoothTime: 0
   engineCurve:
     serializedVersion: 2
@@ -287,8 +287,26 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
-      time: 1
+      time: 0.5016854
       value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.70055866
+      value: 0.9752663
+      inSlope: -0.120308295
+      outSlope: -0.120308295
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.25415552
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 0.95517015
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -300,8 +318,9 @@ MonoBehaviour:
     m_RotationOrder: 4
   manualDriving: 0
   trackPointsEvent: {fileID: 11400000, guid: eecc3af486116f94298de7a7a3f9dccc, type: 2}
-  trackPointsOffset: 5
+  trackPointsOffset: 7
   carAI: {fileID: 11400000, guid: ad4172a9d6b98214dacd532413f2f3ca, type: 2}
+  isBreaking: 0
 --- !u!54 &635295943908193990
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -421,27 +440,27 @@ WheelCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2377346732196597136}
   serializedVersion: 2
-  m_Center: {x: 0, y: 0.15, z: 0}
+  m_Center: {x: -0.08, y: 0.15, z: 0}
   m_Radius: 0.2
   m_SuspensionSpring:
-    spring: 35000
+    spring: 50000
     damper: 4500
     targetPosition: 0.5
   m_SuspensionDistance: 0.3
   m_ForceAppPointDistance: 0
-  m_Mass: 20
+  m_Mass: 70
   m_WheelDampingRate: 0.25
   m_ForwardFriction:
     m_ExtremumSlip: 0.4
     m_ExtremumValue: 1
     m_AsymptoteSlip: 0.8
-    m_AsymptoteValue: 0.5
+    m_AsymptoteValue: 0.7
     m_Stiffness: 1
   m_SidewaysFriction:
     m_ExtremumSlip: 0.2
     m_ExtremumValue: 1
     m_AsymptoteSlip: 0.5
-    m_AsymptoteValue: 0.75
+    m_AsymptoteValue: 0.6
     m_Stiffness: 1
   m_IncludeLayers:
     serializedVersion: 2
@@ -544,27 +563,27 @@ WheelCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4482010058520232301}
   serializedVersion: 2
-  m_Center: {x: 0, y: 0.15, z: 0}
+  m_Center: {x: 0.08, y: 0.15, z: 0}
   m_Radius: 0.2
   m_SuspensionSpring:
-    spring: 35000
+    spring: 50000
     damper: 4500
     targetPosition: 0.5
   m_SuspensionDistance: 0.3
   m_ForceAppPointDistance: 0
-  m_Mass: 20
+  m_Mass: 70
   m_WheelDampingRate: 0.25
   m_ForwardFriction:
     m_ExtremumSlip: 0.4
     m_ExtremumValue: 1
     m_AsymptoteSlip: 0.8
-    m_AsymptoteValue: 0.5
+    m_AsymptoteValue: 0.7
     m_Stiffness: 1
   m_SidewaysFriction:
     m_ExtremumSlip: 0.2
     m_ExtremumValue: 1
     m_AsymptoteSlip: 0.5
-    m_AsymptoteValue: 0.75
+    m_AsymptoteValue: 0.6
     m_Stiffness: 1
   m_IncludeLayers:
     serializedVersion: 2
@@ -667,27 +686,27 @@ WheelCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7845681157432615174}
   serializedVersion: 2
-  m_Center: {x: 0, y: 0.15, z: 0}
+  m_Center: {x: 0.08, y: 0.15, z: 0}
   m_Radius: 0.2
   m_SuspensionSpring:
-    spring: 35000
+    spring: 50000
     damper: 4500
     targetPosition: 0.5
   m_SuspensionDistance: 0.3
   m_ForceAppPointDistance: 0
-  m_Mass: 20
+  m_Mass: 70
   m_WheelDampingRate: 0.25
   m_ForwardFriction:
     m_ExtremumSlip: 0.4
     m_ExtremumValue: 1
     m_AsymptoteSlip: 0.8
-    m_AsymptoteValue: 0.5
+    m_AsymptoteValue: 0.7
     m_Stiffness: 1
   m_SidewaysFriction:
     m_ExtremumSlip: 0.2
     m_ExtremumValue: 1
     m_AsymptoteSlip: 0.5
-    m_AsymptoteValue: 0.75
+    m_AsymptoteValue: 0.6
     m_Stiffness: 1
   m_IncludeLayers:
     serializedVersion: 2
@@ -843,7 +862,7 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -4819223349682164798, guid: 1453688a4e2a7dd488216a7054e4642b,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 831338232496199386}
+      addedObject: {fileID: 1033008538973950498}
   m_SourcePrefab: {fileID: 100100000, guid: 1453688a4e2a7dd488216a7054e4642b, type: 3}
 --- !u!1 &1819449314862052224 stripped
 GameObject:
@@ -851,8 +870,8 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 2603457057961220162}
   m_PrefabAsset: {fileID: 0}
---- !u!64 &831338232496199386
-MeshCollider:
+--- !u!136 &1033008538973950498
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -864,15 +883,16 @@ MeshCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 0
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -8545447256379345787, guid: 1453688a4e2a7dd488216a7054e4642b, type: 3}
+  serializedVersion: 2
+  m_Radius: 0.3125
+  m_Height: 0.7466604
+  m_Direction: 2
+  m_Center: {x: -0, y: 0.296875, z: -0.026646227}
 --- !u!4 &2570410915773972393 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 1453688a4e2a7dd488216a7054e4642b,

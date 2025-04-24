@@ -31,6 +31,7 @@ public class CarControl : MonoBehaviour
 
     public CarAI carAI;
     private BehaviourTree Tree;
+    public bool isBreaking;
 
     void OnEnable()
     {
@@ -91,6 +92,12 @@ public class CarControl : MonoBehaviour
         if(Input.GetAxis("Horizontal") != 0){
             horizontalInput = Input.GetAxis("Horizontal");
         }
+        if(Input.GetKeyDown(KeyCode.Space)){
+            isBreaking = true;
+        }
+        else if(isBreaking && Input.GetKeyUp(KeyCode.Space)){
+            isBreaking = false;
+        }
     }
 
     private void Moving(){
@@ -116,6 +123,20 @@ public class CarControl : MonoBehaviour
         }else{
             wheelColliders[0].steerAngle = 0;
             wheelColliders[1].steerAngle = 0;
+        }
+
+        //BREAKING
+        if(isBreaking){
+            for (int i = 0; i < 4; i++)
+            {
+                wheelColliders[i].brakeTorque = 10000;
+            }
+        }
+        else{
+            for (int i = 0; i < 4; i++)
+            {
+                wheelColliders[i].brakeTorque = 0;
+            }
         }
     }
 
