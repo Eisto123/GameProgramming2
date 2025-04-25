@@ -116,7 +116,7 @@ public class RabbitAI
             rabbit.SetTargetPosition(targetPos, findTarget);
         }
 
-        Debug.Log("target layer: " + target);
+        //Debug.Log("target layer: " + target);
         rabbit.SetTargetLayer(target);
         
         //rabbit.SearchTarget();

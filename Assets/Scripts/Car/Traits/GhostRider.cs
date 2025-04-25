@@ -8,6 +8,6 @@ public class GhostRider : ScriptableObject, ITrait
     public CarTraits Trait => CarTraits.GhostRider;
     public void ApplyTrait(CarControl car)
     {
-        car.rb.excludeLayers = LayerMask.GetMask("Car");
+        car.rb.excludeLayers += LayerMask.GetMask("Car");
     }
 }

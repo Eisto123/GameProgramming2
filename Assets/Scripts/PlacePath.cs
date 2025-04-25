@@ -125,11 +125,6 @@ public class PlacePath : MonoBehaviour
             }
         }
 
-        for(int i = 0; i<carAmount; i++){
-            //var car = Instantiate(carPrefab);
-            //PlaceCarOnPosition(car, knotArray[knotArray.Length-1-i].Position + new float3(0,0.2f,0), knotArray[0].Rotation);
-        }
-
         // Vector3[] knotPosition = new Vector3[knotArray.Length];
         // for(int i = 0; i<knotArray.Length; i++){
         //     Vector3 position = knotArray[i].Position;
@@ -322,8 +317,4 @@ public class PlacePath : MonoBehaviour
         return new Vector3(normX * mapWidth, 0, normZ * mapHeight);
     }
 
-    public void PlaceCarOnPosition(GameObject car, Vector3 position, quaternion rotation){
-        car.transform.position = position;
-        car.transform.rotation = rotation;
-    }
 }

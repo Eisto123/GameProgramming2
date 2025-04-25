@@ -9,10 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 640d647ed0ffd8142835c8a7d0b148e7, type: 3}
-  m_Name: BasicFollowCar
+  m_Script: {fileID: 11500000, guid: fcf2a419d73d7394ea24f2226a7bd636, type: 3}
+  m_Name: SkilledSailor
   m_EditorClassIdentifier: 
-  Trait1Type: 8
-  Trait2Type: 5
-  SteerSpeed: 0.8
-  PowerSpeed: 1

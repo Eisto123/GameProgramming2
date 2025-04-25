@@ -8,9 +8,6 @@ public class BasicFollowCar : CarAI
 {
     private ITrait Trait1;
     private ITrait Trait2;
-
-    public CarTraits Trait1Type;
-    public CarTraits Trait2Type;
     public float SteerSpeed = 5f;
 
     [Range(0, 1)]
@@ -44,6 +41,13 @@ public class BasicFollowCar : CarAI
                         )   
                     )
                 ) 
+            ),
+            new Filter(
+                ()=>{return car.isRabbitInFront()&&!car.isAnimalKiller;},
+                new Action
+                    (
+                        () => car.HitBrake()
+                    )   
             ),
             new Filter(
                 ()=>{return car.isFenceInFront();},

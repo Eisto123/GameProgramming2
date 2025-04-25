@@ -6,5 +6,6 @@ public enum CarTraits{
     MegaTorque,
     SteeringMaster,
     TitanRacer,
-    SavageDriver
+    SavageDriver,
+    FastRespawn
 }

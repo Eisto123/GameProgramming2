@@ -29,6 +29,7 @@ public class CarControl : MonoBehaviour
     private Vector3 currentTrackPoint;
     private Vector3 closestTrackPoint;
     public int trackPointsOffset = 0;
+    public int respawnTreshold = 5;
 
     public CarAI carAI;
     private BehaviourTree Tree;
@@ -36,8 +37,8 @@ public class CarControl : MonoBehaviour
     [Range(0,180)]public float detectionAngle = 5f;
     public float detectionRadius = 5f;
     public LayerMask detectionLayer;
-
     [HideInInspector] public bool isSavageDriver = false;
+    [HideInInspector] public bool isAnimalKiller = false;
 
 
     void OnEnable()
@@ -67,6 +68,14 @@ public class CarControl : MonoBehaviour
     void Update()
     {
         CheckIfFlipped();
+        CheckIfFallen();
+    }
+    private void CheckIfFallen()
+    {
+        if (transform.position.y < -2.2f)
+        {
+            ResetCarPosition(closestTrackPoint+Vector3.up * 2f); // Reset the car's position
+        }
     }
 
     void FixedUpdate()
@@ -212,7 +221,6 @@ public class CarControl : MonoBehaviour
 
             if (Vector3.Angle(transform.forward, directionToTarget) < detectionAngle / 2)
             {
-                Debug.Log("Object detected in front: " + target.tag);
                 return target.tag;
             }
             
@@ -226,8 +234,7 @@ public class CarControl : MonoBehaviour
 
         if (Physics.SphereCast(origin, 2, direction, out RaycastHit hit, 2, detectionLayer))
         {
-            Debug.DrawLine(origin, hit.point, Color.red);
-            Debug.Log("Object on the left (sphere): " + hit.collider.name);
+
             return hit.collider.tag;
         }
         return null;
@@ -239,8 +246,6 @@ public class CarControl : MonoBehaviour
 
         if (Physics.SphereCast(origin, 2, direction, out RaycastHit hit, 2, detectionLayer))
         {
-            Debug.DrawLine(origin, hit.point, Color.red);
-            Debug.Log("Object on the left (sphere): " + hit.collider.name);
             return hit.collider.tag;
         }
         return null;
@@ -250,10 +255,10 @@ public class CarControl : MonoBehaviour
     private float collisiontimer = 0f;
     void OnCollisionStay(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Fence"))
+        if (collision.gameObject.CompareTag("Fence")||collision.gameObject.layer==LayerMask.NameToLayer("Rock"))
         {
             collisiontimer += Time.deltaTime;
-            if (collisiontimer >= 5f) // 1 second delay before logging
+            if (collisiontimer >= respawnTreshold)
             {
                 Debug.Log("wasted");
 
@@ -264,7 +269,7 @@ public class CarControl : MonoBehaviour
     }
     void OnCollisionExit(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Fence"))
+        if (collision.gameObject.CompareTag("Fence")||collision.gameObject.layer==LayerMask.NameToLayer("Rock"))
         {
             collisiontimer = 0f; // Reset the timer when the car is no longer in contact with the fence
         }
@@ -272,7 +277,7 @@ public class CarControl : MonoBehaviour
     private float flipTimmer = 0f;
     private void CheckIfFlipped()
     {
-        if (transform.up.y < 0.5f)
+        if (transform.up.y < 0.7f)
         {
             flipTimmer += Time.deltaTime;
             Debug.Log("Flipped!");
@@ -281,7 +286,7 @@ public class CarControl : MonoBehaviour
         {
             flipTimmer = 0f; // Reset the timer if the car is not flipped
         }
-        if (flipTimmer >= 5f) // 1 second delay before logging
+        if (flipTimmer >= respawnTreshold) // 1 second delay before logging
         {
             Debug.Log("wasted!");
             ResetCarPosition(closestTrackPoint+Vector3.up * 2f);
@@ -296,7 +301,17 @@ public class CarControl : MonoBehaviour
         transform.position = position;
         Vector3 rotation = (currentTrackPoint - closestTrackPoint).normalized;
         rotation.y = 0f; // Keep the y component zero to avoid tilting
-        transform.rotation = quaternion.Euler(rotation); 
+        transform.rotation = quaternion.Euler(rotation);
+        StartCoroutine(ImortalTimer(3f));
+    }
+    IEnumerator ImortalTimer(float time)
+    {
+        LayerMask currentMask = rb.excludeLayers;
+        rb.excludeLayers += LayerMask.GetMask("Car");
+        rb.excludeLayers += LayerMask.GetMask("Rock");
+        yield return new WaitForSeconds(time);
+        rb.excludeLayers = currentMask;
+        
     }
 
     #region AI
@@ -314,6 +329,16 @@ public class CarControl : MonoBehaviour
         }
         return false;
     }
+    public bool isRabbitInFront()
+    {
+        String tag = DetectObjectsInFront();
+        if(tag == "Rabbit" && !isFacingBackWard())
+        {
+            return true;
+        }
+        return false;
+    }
+
     public bool isCarLeft()
     {
         String tag = DetectObjectsInLeft();

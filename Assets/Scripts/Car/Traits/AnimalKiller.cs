@@ -8,5 +8,6 @@ public class AnimalKiller : ScriptableObject, ITrait
     public CarTraits Trait => CarTraits.AnimalKiller;
     public void ApplyTrait(CarControl car)
     {
+        car.isAnimalKiller = true;
     }
 }
