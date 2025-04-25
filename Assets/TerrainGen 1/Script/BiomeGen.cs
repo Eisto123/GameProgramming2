@@ -2,12 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
-using System.IO;
-using Unity.VisualScripting;
+using UnityEngine.AI;
+using Unity.AI.Navigation;
 
 
 public class BiomeGen : MonoBehaviour
 {
+    public NavMeshSurface navMeshSurface;
     [Header("terrain")]
     public Terrain terrain;
     public LayerMask terrainLayer;
@@ -31,13 +32,12 @@ public class BiomeGen : MonoBehaviour
     public RenderTexture humidityRenderTexture;
     public RenderTexture biomeRenderTexture;
     private BiomeType[,] biomeMap;
+    public LayerMask objLayer;
 
     [Header("Trees & Plants")]
     public int treeCount = 1000;
     public int grassCount = 5000;
     public int plantCount = 5000;
-    public LayerMask treeLayer;
-    public LayerMask plantLayer;
     public float treeRadius;
     public float grassRadius;
     public float plantRadius;
@@ -55,6 +55,15 @@ public class BiomeGen : MonoBehaviour
     [Range(0f,1f)]
     public float onRoadProbablity;
     private GameObject underwater;
+
+    [Header("Rabbit Food")]
+    public int norFoodCount = 300;
+    public int colFoodCount = 50;
+    public float foodRadius = 1;
+    public LayerMask foodLayer;
+    public GameObject normalFood;
+    public GameObject colorFood;
+    private GameObject food;
 
     [Header("Perlin Noise - Temperature")]
     public int tempOctave = 4;
@@ -113,16 +122,23 @@ public class BiomeGen : MonoBehaviour
         plants = GameObject.Find("Plants");
         //rocks = GameObject.Find("Rocks");
         underwater = GameObject.Find("Underwater");
+        food = GameObject.Find("Food");
         pathPoints = paths.GetKnotPositions();
         pathRadius = paths.GetPathRadius() - 3;
 
         GenerateBiomeMap();
         RenderBiomeMap(biomeRenderTexture);
-        PlaceObjs(treeCount, 0, treeRadius, treeLayer);
-        PlaceObjs(grassCount, 1, grassRadius, plantLayer);
-        PlaceObjs(plantCount, 2, plantRadius, plantLayer);
-        PlaceWaterBiome(rockCount,0, rockRadius, rockLayer);
-        PlaceWaterBiome(waterplantCount,1, plantRadius, plantLayer);
+        PlaceObjs(treeCount, 0, treeRadius);
+        PlaceObjs(grassCount, 1, grassRadius);
+        PlaceObjs(plantCount, 2, plantRadius);
+        PlaceWaterBiome(rockCount,0, rockRadius);
+        PlaceWaterBiome(waterplantCount,1, plantRadius);
+
+        
+        PlaceObjs(norFoodCount, 3, foodRadius);
+        PlaceObjs(colFoodCount, 4, foodRadius);
+
+        navMeshSurface.BuildNavMesh();
     }
     
     private void GenerateBiomeMap()
@@ -222,7 +238,7 @@ public class BiomeGen : MonoBehaviour
         Graphics.Blit(biomeTex, biomeRenderTexture);
     }
 
-    void PlaceObjs(int amount, int objType, float objRadius, LayerMask objLayer)
+    void PlaceObjs(int amount, int objType, float objRadius)
     {
         // objType = 0: tree; 1: grass; 2: plants; 3: rocks
         int attempts = 0;
@@ -239,10 +255,28 @@ public class BiomeGen : MonoBehaviour
             BiomeType biome = biomeMap[x, z];
             BiomeConfig config = biomeConfigs.Find(b => b.biomeType == biome);
 
+            float density = 1;
+            int prefabCount = 1;
+            switch (objType)
+            {
+                case 0: // tress
+                    density = config.treeDensity;
+                    prefabCount = config.treePrefabs.Count;
+                    break;
+                case 1: // grass
+                    density = config.grassDensity;
+                    prefabCount = config.grassPrefab!=null? 1:0;
+                    break;
+                case 2: // plants
+                    density = config.plantDensity;
+                    prefabCount = config.plantPrefabs.Count;
+                    break;
+            }
+
             // Only put trees when this biome allows trees
             // Different biome type has different densities of trees
-            if (config == null || config.treePrefabs.Count == 0) continue;
-            if (Random.Range(0f,1f) > config.treeDensity) continue;
+            if (config == null || prefabCount == 0) continue;
+            if (Random.Range(0f,1f) > density) continue;
             if (x < 5 || x > terrainSize.x-5 || z < 5 || z > terrainSize.z-5 ) continue;
 
             // No objects on the road
@@ -265,8 +299,11 @@ public class BiomeGen : MonoBehaviour
                 // No objects on the terrain edge
                 if (objType!=3 && hit.point.y <= waterHeight) continue;
 
+                // No objects in lake
+                if (hit.point.y < waterHeight) continue;
+
                 // Avoid overlap
-                if (Physics.CheckSphere(hit.point, objRadius, treeLayer)||Physics.CheckSphere(hit.point, objRadius, plantLayer)||Physics.CheckSphere(hit.point, objRadius, rockLayer)) 
+                if (Physics.CheckSphere(hit.point, objRadius, objLayer)) 
                     continue;
 
                 switch (objType)
@@ -276,6 +313,8 @@ public class BiomeGen : MonoBehaviour
                         GameObject obj = Instantiate(prefab, hit.point, Quaternion.identity, trees.transform);
                         obj.layer = LayerMask.NameToLayer("Tree");
                         obj.AddComponent<BoxCollider>();
+                        NavMeshObstacle obs = obj.AddComponent<NavMeshObstacle>();
+                        obs.shape = NavMeshObstacleShape.Capsule;
                         break;
                     case 1: // grass
                         prefab = config.grassPrefab;
@@ -289,6 +328,18 @@ public class BiomeGen : MonoBehaviour
                         obj = Instantiate(prefab, hit.point, Quaternion.identity, plants.transform);
                         obj.layer = LayerMask.NameToLayer("Plant");
                         obj.AddComponent<BoxCollider>();
+                        obs = obj.AddComponent<NavMeshObstacle>();
+                        obs.shape = NavMeshObstacleShape.Capsule;
+                        break;
+                    case 3: // food
+                        obj = Instantiate(normalFood, hit.point, Quaternion.identity, food.transform);
+                        obj.layer = LayerMask.NameToLayer("Food");
+                        obj.AddComponent<BoxCollider>();
+                        break;
+                    case 4: // coolor food
+                        obj = Instantiate(colorFood, hit.point, Quaternion.identity, food.transform);
+                        obj.layer = LayerMask.NameToLayer("ColorFood");
+                        obj.AddComponent<BoxCollider>();
                         break;
                 }
                 placed++;
@@ -296,7 +347,7 @@ public class BiomeGen : MonoBehaviour
         }
     }
 
-    private void PlaceWaterBiome(int amount, int objType, float objRadius, LayerMask objLayer)
+    private void PlaceWaterBiome(int amount, int objType, float objRadius)
     {
         // objType = 0: rock; 1: plants
         int attempts = 0;

@@ -5,6 +5,7 @@ using UnityEditor;
 public class TerrainPerlinGen : MonoBehaviour
 {
     public Terrain terrain;
+    //public NavMeshSurface navMeshSurface;
 
     public int maxHeight = 600;
     public int terrainWidth = 512;  
@@ -24,6 +25,7 @@ public class TerrainPerlinGen : MonoBehaviour
     private float maxNoiseHeight = float.MinValue;
     private float minNoiseHeight = float.MaxValue;
 
+
     void Start()
     {
         //StartGenerate();
@@ -33,6 +35,7 @@ public class TerrainPerlinGen : MonoBehaviour
     {
         RandomPara();
         CreateNewTerrain(terrainWidth, terrainHeight);
+        //navMeshSurface.BuildNavMesh();
     }
 
     private void RandomPara()

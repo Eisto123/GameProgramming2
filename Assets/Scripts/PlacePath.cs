@@ -126,8 +126,8 @@ public class PlacePath : MonoBehaviour
         }
 
         for(int i = 0; i<carAmount; i++){
-            var car = Instantiate(carPrefab);
-            PlaceCarOnPosition(car, knotArray[knotArray.Length-1-i].Position + new float3(0,0.2f,0), knotArray[0].Rotation);
+            //var car = Instantiate(carPrefab);
+            //PlaceCarOnPosition(car, knotArray[knotArray.Length-1-i].Position + new float3(0,0.2f,0), knotArray[0].Rotation);
         }
 
         // Vector3[] knotPosition = new Vector3[knotArray.Length];
