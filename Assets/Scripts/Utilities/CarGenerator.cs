@@ -14,7 +14,14 @@ public class CarGenerator : MonoBehaviour
         
         for(int i = 0; i<carAmount; i++){
             var car = Instantiate(Cars[i]);
-            RandomCarTrait(car);
+            if(car.tag == "Player"){
+                car.GetComponent<CarControl>().carAI.Trait1Type = TraitManager.instance.PlayerSelectedTrait[0].Trait;
+                car.GetComponent<CarControl>().carAI.Trait2Type = TraitManager.instance.PlayerSelectedTrait[1].Trait;
+            }
+            else{
+                RandomCarTrait(car);
+            }
+            
             PlaceCarOnPosition(car, knotArray[knotArray.Length-1] + new Vector3((i-2)*2,0.2f,0), quaternion.identity);
         }
         GenerationComplete?.Invoke(knotArray);

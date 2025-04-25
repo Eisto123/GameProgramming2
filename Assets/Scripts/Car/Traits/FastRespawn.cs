@@ -6,6 +6,7 @@ using UnityEngine;
 public class FastRespawn : ScriptableObject, ITrait
 {
     public CarTraits Trait => CarTraits.FastRespawn;
+    public string Description => "You can respawn faster!";
     public void ApplyTrait(CarControl car)
     {
         car.respawnTreshold -=3;

@@ -6,6 +6,7 @@ using UnityEngine;
 public class TitanRacer : ScriptableObject, ITrait
 {
     public CarTraits Trait => CarTraits.TitanRacer;
+    public string Description => "You are a titan! You are bigger than the others!";
     public void ApplyTrait(CarControl car)
     {
         car.gameObject.transform.localScale = new Vector3(1.4f, 1.4f, 1.4f);

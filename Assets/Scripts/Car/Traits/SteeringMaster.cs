@@ -6,6 +6,7 @@ using UnityEngine;
 public class SteeringMaster : ScriptableObject, ITrait
 {
     public CarTraits Trait => CarTraits.SteeringMaster;
+    public string Description => "Your steering will be better!";
     public void ApplyTrait(CarControl car)
     {
         car.radius -= 0.4f;

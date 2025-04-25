@@ -6,6 +6,7 @@ public class TraitManager : MonoBehaviour
 {
     public static TraitManager instance;
     public ScriptableObject[] traitSOs;
+    public List<ITrait> PlayerSelectedTrait = new List<ITrait>();
     public List<ITrait> traits = new List<ITrait>();
     private void Awake()
     {
