@@ -9,10 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 640d647ed0ffd8142835c8a7d0b148e7, type: 3}
-  m_Name: BasicFollowCar
+  m_Script: {fileID: 11500000, guid: d293a2db42d25364aaf4bce64035a34c, type: 3}
+  m_Name: TitanRacer
   m_EditorClassIdentifier: 
-  Trait1Type: 7
-  Trait2Type: 1
-  SteerSpeed: 0.8
-  PowerSpeed: 1

@@ -1,8 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using System.Linq;
-
 using AlanZucconi.AI.BT;
 
 
@@ -10,13 +6,54 @@ using AlanZucconi.AI.BT;
                      menuName = "CarAI/BasicFollowCar")]
 public class BasicFollowCar : CarAI
 {
+    private ITrait Trait1;
+    private ITrait Trait2;
 
+    public CarTraits Trait1Type;
+    public CarTraits Trait2Type;
     public float SteerSpeed = 5f;
 
     [Range(0, 1)]
     public float PowerSpeed = 0.3f;
+
+    public override void SetUp(CarControl car)
+    {
+        Trait1 = TraitManager.instance.GetTrait(Trait1Type);
+        Trait2 = TraitManager.instance.GetTrait(Trait2Type);
+        Trait1.ApplyTrait(car);
+        Trait2.ApplyTrait(car);
+    }
     public override Node CreateBehaviourTree(CarControl car)
     {
-        return new Action(() => car.MoveTowardsCurrentTrackPoint(SteerSpeed, PowerSpeed));
+        return new Selector(
+            new Filter(
+                ()=>{return car.isSavageDriver;},
+                new Selector(
+                    new Filter(
+                        ()=>{return car.isCarLeft();},
+                        new Action
+                        (
+                            () => car.TurnLeft(PowerSpeed)
+                        )   
+                    ),
+                    new Filter(
+                        ()=>{return car.isCarRight();},
+                        new Action
+                        (
+                            () => car.TurnRight(PowerSpeed)
+                        )   
+                    )
+                ) 
+            ),
+            new Filter(
+                ()=>{return car.isFenceInFront();},
+                new Action
+                    (
+                        () => car.TurnRight(0f)
+                    )   
+            ),
+            new Action(() => car.MoveTowardsCurrentTrackPoint(SteerSpeed, PowerSpeed))
+
+        );
     }
 }

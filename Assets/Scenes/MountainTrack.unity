@@ -726,6 +726,7 @@ GameObject:
   m_Component:
   - component: {fileID: 503998788}
   - component: {fileID: 503998787}
+  - component: {fileID: 503998789}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -761,6 +762,25 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &503998789
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 503998786}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c87fd17973f258d4b84b8382adbf3813, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  traitSOs:
+  - {fileID: 11400000, guid: df2dbb7486e87824fa606535d3c05f0b, type: 2}
+  - {fileID: 11400000, guid: b5e433c735e7cfb42ab31e9c36c64b15, type: 2}
+  - {fileID: 11400000, guid: 4d9da6e2dd4aedf4292cdc57c3890db4, type: 2}
+  - {fileID: 11400000, guid: 30055f73d447db64d8cd5388984511d1, type: 2}
+  - {fileID: 11400000, guid: 90596a39947aa45429cc428a671e6092, type: 2}
+  - {fileID: 11400000, guid: a64537cd6ab053944bc27b4ee4680a1e, type: 2}
 --- !u!1 &588306098
 GameObject:
   m_ObjectHideFlags: 0
@@ -1650,9 +1670,9 @@ MonoBehaviour:
           z: 0
           w: 0.69403034
     - Position:
-        x: 128.01
+        x: 96.200005
         y: 0
-        z: -0.69
+        z: 6.5
       TangentIn:
         x: 0.12142295
         y: 0
@@ -2195,7 +2215,7 @@ GameObject:
   - component: {fileID: 1695093712}
   - component: {fileID: 1695093714}
   - component: {fileID: 1695093713}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Fence
   m_TagString: Untagged
   m_Icon: {fileID: 0}
