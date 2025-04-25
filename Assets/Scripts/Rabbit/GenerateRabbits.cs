@@ -16,6 +16,8 @@ public class GenerateRabbits : MonoBehaviour
     public Terrain terrain;
     public LayerMask terrainLayer;
     public float waterHeight = 10;
+    [Range(0f,1f)]
+    public float onRoadProbablity = 0.1f;
 
     private PlacePath paths;
     private Vector3[] pathPoints;
@@ -24,7 +26,6 @@ public class GenerateRabbits : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        paths = GameObject.FindObjectOfType<PlacePath>();
     }
 
     // Update is called once per frame
@@ -35,6 +36,7 @@ public class GenerateRabbits : MonoBehaviour
 
     public void Generate()
     {
+        paths = GameObject.FindObjectOfType<PlacePath>();
         rabbits = GameObject.Find("Rabbits");
         pathPoints = paths.GetKnotPositions();
         pathRadius = paths.GetPathRadius() - 3;
@@ -79,7 +81,7 @@ public class GenerateRabbits : MonoBehaviour
                     break;
                 }
             }
-            if (ifOnRoad) continue;
+            if (ifOnRoad && Random.Range(0f,1f) > onRoadProbablity) continue;
 
             // Emit raycast from the top to terrain
             Vector3 rayOrigin = new Vector3(x, 200f, z) + terrain.GetPosition();

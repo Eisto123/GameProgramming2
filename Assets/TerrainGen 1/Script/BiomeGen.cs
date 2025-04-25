@@ -90,7 +90,6 @@ public class BiomeGen : MonoBehaviour
         // trees = GameObject.Find("Trees");
         // grass = GameObject.Find("Grass");
         // plants = GameObject.Find("Plants");
-        paths = GameObject.FindObjectOfType<PlacePath>();
 
         // Generate();
     }
@@ -115,6 +114,7 @@ public class BiomeGen : MonoBehaviour
 
     public void Generate()
     {
+        paths = GameObject.FindObjectOfType<PlacePath>();
         terrainData = terrain.terrainData;
         terrainSize = terrainData.size;
         trees = GameObject.Find("Trees");

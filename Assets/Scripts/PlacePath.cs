@@ -42,6 +42,14 @@ public class PlacePath : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // ResetSplatMap();
+        // meshCollider = GetComponent<MeshCollider>();
+        // RandomizeSpline();
+        // MapKnot();
+    }
+
+    public void Generate()
+    {
         ResetSplatMap();
         meshCollider = GetComponent<MeshCollider>();
         RandomizeSpline();
@@ -51,12 +59,12 @@ public class PlacePath : MonoBehaviour
     {
     }
 
-    void OnDestroy()
-    {
-        Debug.Log("reset");
-        ResetSplatMap();
-        terrain.terrainData.SetHeights(0, 0, origHeightMap);
-    }
+    // void OnDestroy()
+    // {
+    //     Debug.Log("reset");
+    //     ResetSplatMap();
+    //     terrain.terrainData.SetHeights(0, 0, origHeightMap);
+    // }
 
     // void OnDrawGizmos()
     // {

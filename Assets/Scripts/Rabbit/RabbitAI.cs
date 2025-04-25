@@ -222,13 +222,15 @@ public class RabbitAI
         Collider[] hits = rabbit.CheckTarget(LayerMask.GetMask(targetLayer));
         if (hits.Length != 0)
         {
-            Debug.Log("yes hit");
+            //Debug.Log("yes hit");
             Vector3 pos = hits.MinBy(obj => Vector3.Distance(rabbitTransform.position, obj.transform.position))
                 .ClosestPoint(rabbit.transform.position);
             pos = new Vector3(pos.x, genTerrain.GetInterpolatedHeight(pos.x/genTerrain.size.x, pos.z/genTerrain.size.z), pos.z);
 
             if (targetLayer == "Water" && (pos.y > 8 || pos.y < 7.5f))
-                Debug.Log("No water point < 8 &&  > 7.5");
+            {
+                //Debug.Log("No water point < 8 &&  > 7.5");
+            }
             else
             {
                 targetPos = pos;
@@ -236,8 +238,8 @@ public class RabbitAI
                 return true;
             }
         }
-        Debug.Log("hastarget? "+hasTarget);
-        Debug.Log("no hit");
+        //Debug.Log("hastarget? "+hasTarget);
+        //Debug.Log("no hit");
         //target = transform.position + new Vector3(Random.Range(0,1f),Random.Range(0,1f),Random.Range(0,1f));
 
         
@@ -296,7 +298,7 @@ public class RabbitAI
 
         if (tries == maxTries)
         {
-            Debug.LogError("target: " + target + " fail: " + new Vector3(x, y, z));
+            //Debug.LogError("target: " + target + " fail: " + new Vector3(x, y, z));
         }
 
         targetPos = new Vector3(x, y, z);
