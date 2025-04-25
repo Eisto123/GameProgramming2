@@ -1507,12 +1507,11 @@ MonoBehaviour:
   splineContainer: {fileID: 796949734}
   splineIndex: 0
   splineTime: 0
-  roadWidth: 10
   resolution: 200
   meshFilter: {fileID: 796949733}
   Fence: {fileID: 1695093714}
   randomRange: 5
-  carPrefab: {fileID: 2292858064513078187, guid: e0987a45938639644a213a10373dff69,
+  finishLinePrefab: {fileID: 8270852365212260508, guid: 4bb440e8558119248ad2dbe8fc716cb6,
     type: 3}
   carAmount: 2
   OnGenerationComplete:

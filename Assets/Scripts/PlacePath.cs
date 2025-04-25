@@ -21,17 +21,16 @@ public class PlacePath : MonoBehaviour
     private float3 forward;
     private float3 upVector;
 
-    private List<float3> rightPoints;
-    private List<float3> leftPoints;
-    [SerializeField]private float roadWidth;
+    // private List<float3> rightPoints;
+    // private List<float3> leftPoints;
+    // [SerializeField]private float roadWidth;
     public float resolution;
     [SerializeField]private MeshFilter meshFilter;
     private MeshCollider meshCollider;
     public SplineContainer Fence;
 
     public int randomRange;
-
-    public GameObject carPrefab;
+    public GameObject finishLinePrefab;
     public int carAmount;
 
     public UnityEvent<Vector3[]> OnGenerationComplete;
@@ -59,28 +58,28 @@ public class PlacePath : MonoBehaviour
         terrain.terrainData.SetHeights(0, 0, origHeightMap);
     }
 
-    void OnDrawGizmos()
-    {
-        if (!isVisualizing) return;
-        Handles.matrix = transform.localToWorldMatrix;
+    // void OnDrawGizmos()
+    // {
+    //     if (!isVisualizing) return;
+    //     Handles.matrix = transform.localToWorldMatrix;
 
-        if (rightPoints == null || leftPoints == null) return;
+    //     if (rightPoints == null || leftPoints == null) return;
 
-        for (int i = 0; i < rightPoints.Count - 1; i++)
-        {
-            Handles.color = Color.red;
-            Handles.SphereHandleCap(0, rightPoints[i], Quaternion.identity, 0.3f, EventType.Repaint);
-            Handles.color = Color.blue;
-            Handles.SphereHandleCap(0, leftPoints[i], Quaternion.identity, 0.3f, EventType.Repaint);
-        }
+    //     for (int i = 0; i < rightPoints.Count - 1; i++)
+    //     {
+    //         Handles.color = Color.red;
+    //         Handles.SphereHandleCap(0, rightPoints[i], Quaternion.identity, 0.3f, EventType.Repaint);
+    //         Handles.color = Color.blue;
+    //         Handles.SphereHandleCap(0, leftPoints[i], Quaternion.identity, 0.3f, EventType.Repaint);
+    //     }
 
-        if (knotPositions == null) return;
+    //     if (knotPositions == null) return;
 
-        for (int i = 0; i < knotPositions.Length; i++)
-        {
-            Gizmos.DrawSphere(knotPositions[i], 0.5f);
-        }
-    }
+    //     for (int i = 0; i < knotPositions.Length; i++)
+    //     {
+    //         Gizmos.DrawSphere(knotPositions[i], 0.5f);
+    //     }
+    // }
 
     private void RandomizeSpline(){
         var knotArray = splineContainer.Spline.ToArray();
@@ -130,7 +129,12 @@ public class PlacePath : MonoBehaviour
         //     Vector3 position = knotArray[i].Position;
         //     knotPosition[i] = position;
         // }
+
+        GenerateFinishLine();
+
         OnGenerationComplete.Invoke(knotPositions);
+
+
         for(int i = 0; i<knotArray.Length; i++){
             Vector3 forward;
             if(i == knotArray.Length-1){
@@ -172,6 +176,11 @@ public class PlacePath : MonoBehaviour
         
         //OnGenerationComplete.Invoke();
 
+    }
+
+    private void GenerateFinishLine(){
+        GameObject finishiline = Instantiate(finishLinePrefab, knotArray[0].Position, knotArray[0].Rotation);
+        //finishiline.transform.localScale = new Vector3(GetPathRadius()*2-2,0.1f,1f);
     }
 
     [Header("Terrain Path Setting")]
