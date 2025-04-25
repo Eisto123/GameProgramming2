@@ -15,7 +15,6 @@ public class CarControl : MonoBehaviour
     //public float steerAngle = 30;
     public float radius = 6f;
     public float downForce = 50;
-    public float turnAngleThreshold;
     private float wheelRPM;
 
     public AnimationCurve engineCurve;
@@ -26,10 +25,11 @@ public class CarControl : MonoBehaviour
 
     public TrackPoints trackPointsEvent;
     private Vector3[] trackPoints;
-    private Vector3 currentTrackPoint;
+    public Vector3 currentTrackPoint;
     private Vector3 closestTrackPoint;
     public int trackPointsOffset = 0;
     public int respawnTreshold = 5;
+    public int CurrentLap = 0;
 
     public CarAI carAI;
     private BehaviourTree Tree;
@@ -68,14 +68,6 @@ public class CarControl : MonoBehaviour
     void Update()
     {
         CheckIfFlipped();
-        CheckIfFallen();
-    }
-    private void CheckIfFallen()
-    {
-        if (transform.position.y < -2.2f)
-        {
-            ResetCarPosition(closestTrackPoint+Vector3.up * 2f); // Reset the car's position
-        }
     }
 
     void FixedUpdate()
@@ -250,9 +242,26 @@ public class CarControl : MonoBehaviour
         }
         return null;
     }
-    
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("FinishLine"))
+        {
+            CurrentLap++;
+            StartCoroutine(LapIgnore(2f)); // Ignore collisions with the finish line for 2 seconds
+            // Handle finish line logic here
+        }
+    }
+    IEnumerator LapIgnore(float time)
+    {
+        LayerMask currentMask = rb.excludeLayers;
+        rb.excludeLayers += LayerMask.GetMask("FinishLine");
+        yield return new WaitForSeconds(time);
+        rb.excludeLayers = currentMask;
+    }
 
     private float collisiontimer = 0f;
+    private float waterTimer = 0f;
     void OnCollisionStay(Collision collision)
     {
         if (collision.gameObject.CompareTag("Fence")||collision.gameObject.layer==LayerMask.NameToLayer("Rock"))
@@ -266,12 +275,26 @@ public class CarControl : MonoBehaviour
                 collisiontimer = 0f; // Reset the timer after logging
             }
         }
+        else if (collision.gameObject.layer==LayerMask.NameToLayer("Water"))
+        {
+            waterTimer += Time.deltaTime;
+            if (waterTimer >= 10f)
+            {
+                Debug.Log("drowned");
+                ResetCarPosition(closestTrackPoint+Vector3.up * 2f); // Reset the car's position
+                waterTimer = 0f; // Reset the timer after logging
+            }
+        }
     }
     void OnCollisionExit(Collision collision)
     {
         if (collision.gameObject.CompareTag("Fence")||collision.gameObject.layer==LayerMask.NameToLayer("Rock"))
         {
             collisiontimer = 0f; // Reset the timer when the car is no longer in contact with the fence
+        }
+        else if (collision.gameObject.layer==LayerMask.NameToLayer("Water"))
+        {
+            waterTimer = 0f; // Reset the timer when the car is no longer in contact with the water
         }
     }
     private float flipTimmer = 0f;
@@ -280,7 +303,6 @@ public class CarControl : MonoBehaviour
         if (transform.up.y < 0.7f)
         {
             flipTimmer += Time.deltaTime;
-            Debug.Log("Flipped!");
         }
         else
         {
@@ -288,7 +310,7 @@ public class CarControl : MonoBehaviour
         }
         if (flipTimmer >= respawnTreshold) // 1 second delay before logging
         {
-            Debug.Log("wasted!");
+            Debug.Log("Flipwasted!");
             ResetCarPosition(closestTrackPoint+Vector3.up * 2f);
             flipTimmer = 0f; // Reset the timer after logging
         }
@@ -302,7 +324,7 @@ public class CarControl : MonoBehaviour
         Vector3 rotation = (currentTrackPoint - closestTrackPoint).normalized;
         rotation.y = 0f; // Keep the y component zero to avoid tilting
         transform.rotation = quaternion.Euler(rotation);
-        StartCoroutine(ImortalTimer(3f));
+        StartCoroutine(ImortalTimer(2f));
     }
     IEnumerator ImortalTimer(float time)
     {
@@ -319,6 +341,15 @@ public class CarControl : MonoBehaviour
     public bool isFacingBackWard()
     {
         return Vector3.Dot(transform.forward, (currentTrackPoint - transform.position).normalized) < 0f;
+    }
+    public bool isObsticleFront()
+    {
+        String tag = DetectObjectsInFront();
+        if((tag == "Untagged") && !isFacingBackWard())
+        {
+            return true;
+        }
+        return false;
     }
     public bool isFenceInFront()
     {

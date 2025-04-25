@@ -50,6 +50,13 @@ public class BasicFollowCar : CarAI
                     )   
             ),
             new Filter(
+                ()=>{return car.isObsticleFront();},
+                new Action
+                    (
+                        () => car.TurnRight(0.5f)
+                    )   
+            ),
+            new Filter(
                 ()=>{return car.isFenceInFront();},
                 new Action
                     (

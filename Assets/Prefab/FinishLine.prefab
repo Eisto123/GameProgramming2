@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7191201941625660647}
   - component: {fileID: 4029369439143728528}
   - component: {fileID: 682102203913574594}
-  m_Layer: 0
+  m_Layer: 30
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -117,7 +117,7 @@ GameObject:
   - component: {fileID: 6516086570676711398}
   - component: {fileID: 6633382708466078172}
   - component: {fileID: 2980965392112734504}
-  m_Layer: 0
+  m_Layer: 30
   m_Name: Cube (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -222,7 +222,7 @@ GameObject:
   - component: {fileID: 5071268927384873560}
   - component: {fileID: 6300638552527933242}
   - component: {fileID: 6705395541466868452}
-  m_Layer: 0
+  m_Layer: 30
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -325,9 +325,9 @@ GameObject:
   m_Component:
   - component: {fileID: 8040600902433097540}
   - component: {fileID: 6836717604063928425}
-  m_Layer: 0
+  m_Layer: 30
   m_Name: FinishLine
-  m_TagString: Untagged
+  m_TagString: FinishLine
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -369,5 +369,5 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 38.619102, y: 24.530563, z: 1}
-  m_Center: {x: -0.2760811, y: -2.7965426, z: 0}
+  m_Size: {x: 37.251026, y: 24.530563, z: 1}
+  m_Center: {x: 5.0295277, y: -2.7965431, z: 0}

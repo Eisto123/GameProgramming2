@@ -39,8 +39,8 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - car
+  - FinishLine
+  - Car
   m_SortingLayers:
   - name: Default
     uniqueID: 0

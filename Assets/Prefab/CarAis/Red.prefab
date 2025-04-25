@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8543980062212661468}
   - component: {fileID: 3968717797814143561}
-  m_Layer: 0
+  m_Layer: 31
   m_Name: Visual
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -46,7 +46,7 @@ CapsuleCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 1073741888
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
@@ -65,7 +65,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2966625084575808662}
-  m_Layer: 0
+  m_Layer: 31
   m_Name: WheelColliders
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -103,7 +103,7 @@ GameObject:
   - component: {fileID: 8005790197319883859}
   - component: {fileID: 1808485628151192592}
   - component: {fileID: 7656265979563290759}
-  m_Layer: 6
+  m_Layer: 31
   m_Name: wheel-fr (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -225,9 +225,9 @@ GameObject:
   - component: {fileID: 402565643142396683}
   - component: {fileID: 6587338997665999804}
   - component: {fileID: 9136964751118018297}
-  m_Layer: 0
+  m_Layer: 31
   m_Name: Red
-  m_TagString: Player
+  m_TagString: Car
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -274,7 +274,7 @@ MonoBehaviour:
   - {fileID: 7313603079473783166}
   - {fileID: 3638098801016348587}
   massCenter: {fileID: 8637759109995880631}
-  maxPower: 1500
+  maxPower: 1400
   radius: 1
   downForce: 70
   turnAngleThreshold: 45
@@ -322,15 +322,17 @@ MonoBehaviour:
     m_RotationOrder: 4
   manualDriving: 0
   trackPointsEvent: {fileID: 11400000, guid: eecc3af486116f94298de7a7a3f9dccc, type: 2}
+  currentTrackPoint: {x: 0, y: 0, z: 0}
   trackPointsOffset: 10
   respawnTreshold: 5
+  CurrentLap: 0
   carAI: {fileID: 11400000, guid: 1ac842389e10f754296de1bc14bd1abb, type: 2}
   isBreaking: 0
   detectionAngle: 20
   detectionRadius: 30
   detectionLayer:
     serializedVersion: 2
-    m_Bits: 2147502080
+    m_Bits: 2147503360
   isSavageDriver: 0
   isAnimalKiller: 0
   rb: {fileID: 0}
@@ -373,7 +375,7 @@ GameObject:
   - component: {fileID: 3673170638468857671}
   - component: {fileID: 9008233207513411568}
   - component: {fileID: 2087870202966679740}
-  m_Layer: 6
+  m_Layer: 31
   m_Name: wheel-fl (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -496,7 +498,7 @@ GameObject:
   - component: {fileID: 3884792152165343755}
   - component: {fileID: 1179203665643867442}
   - component: {fileID: 105132308565893464}
-  m_Layer: 6
+  m_Layer: 31
   m_Name: wheel-br (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -616,7 +618,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7530070180048472682}
-  m_Layer: 0
+  m_Layer: 31
   m_Name: GameObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -650,7 +652,7 @@ GameObject:
   - component: {fileID: 8297849995096882465}
   - component: {fileID: 5241365872397211365}
   - component: {fileID: 9108610538559664927}
-  m_Layer: 6
+  m_Layer: 31
   m_Name: wheel-bl (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -770,7 +772,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6172025548361569950}
-  m_Layer: 0
+  m_Layer: 31
   m_Name: MassCenter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -853,12 +855,12 @@ PrefabInstance:
     - target: {fileID: -8323310439453051056, guid: 1453688a4e2a7dd488216a7054e4642b,
         type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 31
       objectReference: {fileID: 0}
     - target: {fileID: -7793902246011408729, guid: 1453688a4e2a7dd488216a7054e4642b,
         type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 31
       objectReference: {fileID: 0}
     - target: {fileID: -5861409178561632961, guid: 1453688a4e2a7dd488216a7054e4642b,
         type: 3}
@@ -880,20 +882,30 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.y
       value: 180
       objectReference: {fileID: 0}
+    - target: {fileID: -4819223349682164798, guid: 1453688a4e2a7dd488216a7054e4642b,
+        type: 3}
+      propertyPath: m_Layer
+      value: 31
+      objectReference: {fileID: 0}
     - target: {fileID: -2630219190623024763, guid: 1453688a4e2a7dd488216a7054e4642b,
         type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 31
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 1453688a4e2a7dd488216a7054e4642b,
         type: 3}
       propertyPath: m_Name
       value: vehicle-monster-truck
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 1453688a4e2a7dd488216a7054e4642b,
+        type: 3}
+      propertyPath: m_Layer
+      value: 31
+      objectReference: {fileID: 0}
     - target: {fileID: 6088962128163773307, guid: 1453688a4e2a7dd488216a7054e4642b,
         type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 31
       objectReference: {fileID: 0}
     - target: {fileID: 8449996119470504636, guid: 1453688a4e2a7dd488216a7054e4642b,
         type: 3}
