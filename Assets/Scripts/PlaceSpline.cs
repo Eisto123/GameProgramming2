@@ -123,22 +123,6 @@ public class PlaceSpline : MonoBehaviour
         
     }
 
-    void OnDrawGizmos()
-    {
-        if (!isVisualizing) return;
-        Handles.matrix = transform.localToWorldMatrix;
-
-        if (rightPoints == null || leftPoints == null) return;
-
-        for (int i = 0; i < rightPoints.Count - 1; i++)
-        {
-            Handles.color = Color.red;
-            Handles.SphereHandleCap(0, rightPoints[i], Quaternion.identity, 0.3f, EventType.Repaint);
-            Handles.color = Color.blue;
-            Handles.SphereHandleCap(0, leftPoints[i], Quaternion.identity, 0.3f, EventType.Repaint);
-        }
-    }
-
     private void RandomizeSpline(){
         var knotArray = splineContainer.Spline.ToArray();
         for(int i = 0; i<knotArray.Count(); i++){

@@ -318,18 +318,18 @@ public class TerrainFFTGen : MonoBehaviour
     }
 }
 
-[CustomEditor(typeof(TerrainFFTGen))]
-public class TerrainFFTGenEditor : Editor
-{
-    public override void OnInspectorGUI()
-    {
-        DrawDefaultInspector();
+// [CustomEditor(typeof(TerrainFFTGen))]
+// public class TerrainFFTGenEditor : Editor
+// {
+//     public override void OnInspectorGUI()
+//     {
+//         DrawDefaultInspector();
 
-        TerrainFFTGen terrainFFT = (TerrainFFTGen)target;
+//         TerrainFFTGen terrainFFT = (TerrainFFTGen)target;
 
-        if (GUILayout.Button("Start Generate"))
-        {
-            terrainFFT.StartGenerate();
-        }
-    }
-}
+//         if (GUILayout.Button("Start Generate"))
+//         {
+//             terrainFFT.StartGenerate();
+//         }
+//     }
+// }

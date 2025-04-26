@@ -103,23 +103,23 @@ public class GenerateRabbits : MonoBehaviour
     }
 }
 
-[CustomEditor(typeof(GenerateRabbits))]
-public class RabbitGenEditor : Editor
-{
-    public override void OnInspectorGUI()
-    {
-        DrawDefaultInspector();
+// [CustomEditor(typeof(GenerateRabbits))]
+// public class RabbitGenEditor : Editor
+// {
+//     public override void OnInspectorGUI()
+//     {
+//         DrawDefaultInspector();
 
-        GenerateRabbits biome = (GenerateRabbits)target;
+//         GenerateRabbits biome = (GenerateRabbits)target;
 
-        if (GUILayout.Button("Start Generate"))
-        {
-            biome.Generate();
-        }
+//         if (GUILayout.Button("Start Generate"))
+//         {
+//             biome.Generate();
+//         }
 
-        if (GUILayout.Button("Reset"))
-        {
-            biome.Reset();
-        }
-    }
-}
+//         if (GUILayout.Button("Reset"))
+//         {
+//             biome.Reset();
+//         }
+//     }
+// }

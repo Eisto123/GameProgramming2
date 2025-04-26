@@ -453,7 +453,7 @@ public class CarControl : MonoBehaviour
         return;
     // Label the angle
 
-    UnityEditor.Handles.Label(transform.position + Vector3.up * 2f, $"totalpower: {totalPower:F1}°");
+    //UnityEditor.Handles.Label(transform.position + Vector3.up * 2f, $"totalpower: {totalPower:F1}°");
     }
 #endregion
 }

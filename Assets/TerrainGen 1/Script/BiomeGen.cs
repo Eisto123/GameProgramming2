@@ -411,23 +411,23 @@ public class BiomeGen : MonoBehaviour
     }
 }
 
-[CustomEditor(typeof(BiomeGen))]
-public class BiomeGenEditor : Editor
-{
-    public override void OnInspectorGUI()
-    {
-        DrawDefaultInspector();
+// [CustomEditor(typeof(BiomeGen))]
+// public class BiomeGenEditor : Editor
+// {
+//     public override void OnInspectorGUI()
+//     {
+//         DrawDefaultInspector();
 
-        BiomeGen biome = (BiomeGen)target;
+//         BiomeGen biome = (BiomeGen)target;
 
-        if (GUILayout.Button("Start Generate"))
-        {
-            biome.Generate();
-        }
+//         if (GUILayout.Button("Start Generate"))
+//         {
+//             biome.Generate();
+//         }
 
-        if (GUILayout.Button("Reset"))
-        {
-            biome.Reset();
-        }
-    }
-}
+//         if (GUILayout.Button("Reset"))
+//         {
+//             biome.Reset();
+//         }
+//     }
+// }

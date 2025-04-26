@@ -84,18 +84,18 @@ public class TerrainPerlinGen : MonoBehaviour
     }
 }
 
-[CustomEditor(typeof(TerrainPerlinGen))]
-public class TerrainPerlinGenEditor : Editor
-{
-    public override void OnInspectorGUI()
-    {
-        DrawDefaultInspector();
+// [CustomEditor(typeof(TerrainPerlinGen))]
+// public class TerrainPerlinGenEditor : Editor
+// {
+//     public override void OnInspectorGUI()
+//     {
+//         DrawDefaultInspector();
 
-        TerrainPerlinGen terrainPerlin = (TerrainPerlinGen)target;
+//         TerrainPerlinGen terrainPerlin = (TerrainPerlinGen)target;
 
-        if (GUILayout.Button("Start Generate"))
-        {
-            terrainPerlin.StartGenerate();
-        }
-    }
-}
+//         if (GUILayout.Button("Start Generate"))
+//         {
+//             terrainPerlin.StartGenerate();
+//         }
+//     }
+// }
