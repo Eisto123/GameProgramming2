@@ -147,7 +147,7 @@ public class PlacePath : MonoBehaviour
         //     knotPosition[i] = position;
         // }
 
-        GenerateFinishLine();
+        
 
         OnGenerationComplete.Invoke(knotPositions);
 
@@ -177,9 +177,7 @@ public class PlacePath : MonoBehaviour
                 Debug.LogError("No terrain found at knot position");
             }
         }
-
-        
-
+        GenerateFinishLine();
 
         // map to terrain heightmap
         Debug.Log(knotPositions.Length);

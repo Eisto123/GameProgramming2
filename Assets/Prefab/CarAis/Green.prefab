@@ -496,7 +496,7 @@ MonoBehaviour:
   - {fileID: 5660182307607007262}
   - {fileID: 1841757860153503435}
   massCenter: {fileID: 8013452741281173947}
-  maxPower: 1400
+  maxPower: 1500
   radius: 1
   downForce: 70
   engineCurve:
@@ -964,10 +964,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.3125
-  m_Height: 0.7466604
+  m_Radius: 0.22
+  m_Height: 0.93
   m_Direction: 2
-  m_Center: {x: -0, y: 0.296875, z: -0.026646227}
+  m_Center: {x: -0, y: 0.35, z: 0}
 --- !u!1 &4716045676992004832 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6088962128163773307, guid: 1453688a4e2a7dd488216a7054e4642b,
@@ -1067,6 +1067,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: statue_obelisk
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: b42d6d17ea3d3444d995e9faa1dc4e9f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

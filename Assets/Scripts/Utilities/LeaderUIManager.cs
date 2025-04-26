@@ -25,9 +25,16 @@ public class LeaderUIManager : MonoBehaviour
             Destroy(entry);
         }
         currentEntries.Clear();
-
+        List<CarControl> cars = new List<CarControl>();
         // Get current sorted cars
-        List<CarControl> cars = GameManager.cars;
+        if(GameManager.noWinnerYet){
+            cars = GameManager.cars;
+        }
+        else
+        {
+            cars = GameManager.FinalLeaderBoard;
+        }
+         
 
         for (int i = 0; i < cars.Count; i++)
         {

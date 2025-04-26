@@ -14,6 +14,7 @@ public class UIManager : MonoBehaviour
     public CinemachineVirtualCamera cameraCar;
     public PlacePath paths;
     public GameObject carChooseMenu;
+    public GameObject gameEndMenu;
     public GameObject gameMenu;
     public GameObject player;
     public PlayerController playerControl;
@@ -60,6 +61,9 @@ public class UIManager : MonoBehaviour
         carChooseMenu.SetActive(false);
         gameMenu.SetActive(true);
         player.SetActive(true);
+        GameObject car = GameObject.FindGameObjectWithTag("Player");
+        cameraCar.Follow = car.transform;
+        cameraCar.LookAt = car.transform;
     }
 
     public void RestartGame()
@@ -82,5 +86,11 @@ public class UIManager : MonoBehaviour
             cameraPlayer.Priority = 12;
             playerControl.enabled = true;
         }
+    }
+    public void ShowGameEndMenu()
+    {
+        gameEndMenu.SetActive(true);
+        gameMenu.SetActive(false);
+        player.SetActive(false);
     }
 }

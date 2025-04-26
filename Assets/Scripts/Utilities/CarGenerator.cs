@@ -10,8 +10,35 @@ public class CarGenerator : MonoBehaviour
     [SerializeField] private List<GameObject> Cars;
     [SerializeField] private int carAmount = 4;
     public UnityEvent<Vector3[]> GenerationComplete;
-    public void generateCar(Vector3[] knotArray){
-        
+    private List<Vector3> trackPoints = new List<Vector3>();
+    public TrackPoints trackPointsEvent;
+
+    void OnEnable()
+    {
+        trackPointsEvent.trackPointsEvent += OnTrackPointsEvent;
+    }
+    void OnDisable()
+    {
+        trackPointsEvent.trackPointsEvent -= OnTrackPointsEvent;
+    }
+
+    void OnTrackPointsEvent(Vector3[] points)
+    {
+        trackPoints.Clear();
+        trackPoints.AddRange(points);
+    }
+    public void Shuffle(List<GameObject> Cars) {
+		var count = Cars.Count;
+		var last = count - 1;
+		for (var i = 0; i < last; ++i) {
+			var r = UnityEngine.Random.Range(i, count);
+			var tmp = Cars[i];
+			Cars[i] = Cars[r];
+			Cars[r] = tmp;
+		}
+	}
+    public void generateCar(){
+        Shuffle(Cars);
         for(int i = 0; i<carAmount; i++){
             var car = Instantiate(Cars[i]);
             if(car.tag == "Player"){
@@ -22,9 +49,9 @@ public class CarGenerator : MonoBehaviour
                 RandomCarTrait(car);
             }
             
-            PlaceCarOnPosition(car, knotArray[knotArray.Length-1] + new Vector3((i-2)*2,0.2f,0), quaternion.identity);
+            PlaceCarOnPosition(car, trackPoints[trackPoints.Count-3] + new Vector3((i-2)*2,0.2f,0), quaternion.identity);
         }
-        GenerationComplete?.Invoke(knotArray);
+        GenerationComplete?.Invoke(trackPoints.ToArray());
         
     }
     private void PlaceCarOnPosition(GameObject car, Vector3 position, quaternion rotation){

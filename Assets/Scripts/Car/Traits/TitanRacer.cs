@@ -10,5 +10,6 @@ public class TitanRacer : ScriptableObject, ITrait
     public void ApplyTrait(CarControl car)
     {
         car.gameObject.transform.localScale = new Vector3(1.4f, 1.4f, 1.4f);
+        car.maxPower+=500;
     }
 }

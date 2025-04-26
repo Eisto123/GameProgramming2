@@ -53,11 +53,13 @@ public class CarControl : MonoBehaviour
     {
         trackPoints = points;
     }
+    private PlacePath placePath;
 
     public Rigidbody rb;
     // Start is called before the first frame update
     void Start()
     {
+        placePath = FindObjectOfType<PlacePath>();
         rb = GetComponent<Rigidbody>();
         rb.centerOfMass = massCenter.transform.localPosition;
         if(carAI != null){
@@ -68,6 +70,21 @@ public class CarControl : MonoBehaviour
     void Update()
     {
         CheckIfFlipped();
+        CheckOutSideRange();
+    }
+    private float RangeTimer;
+    private void CheckOutSideRange()
+    {
+        if (Vector3.Distance(transform.position, closestTrackPoint) > placePath.GetPathRadius()+1)
+        {
+            RangeTimer += Time.deltaTime;
+            if (RangeTimer >= respawnTreshold+3)
+            {
+                Debug.Log("Out of range!");
+                ResetCarPosition(closestTrackPoint+Vector3.up * 2f); // Reset the car's position
+                RangeTimer = 0f; // Reset the timer after logging
+            }
+        }
     }
 
     void FixedUpdate()
@@ -264,7 +281,7 @@ public class CarControl : MonoBehaviour
     private float waterTimer = 0f;
     void OnCollisionStay(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Fence")||collision.gameObject.layer==LayerMask.NameToLayer("Rock"))
+        if (collision.gameObject.CompareTag("Fence")||collision.gameObject.layer==LayerMask.NameToLayer("Rock")||collision.gameObject.layer==LayerMask.NameToLayer("Tree"))
         {
             collisiontimer += Time.deltaTime;
             if (collisiontimer >= respawnTreshold)

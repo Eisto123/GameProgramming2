@@ -274,10 +274,9 @@ MonoBehaviour:
   - {fileID: 7313603079473783166}
   - {fileID: 3638098801016348587}
   massCenter: {fileID: 8637759109995880631}
-  maxPower: 1400
+  maxPower: 1500
   radius: 1
   downForce: 70
-  turnAngleThreshold: 45
   engineCurve:
     serializedVersion: 2
     m_Curve:
@@ -946,10 +945,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.3125
-  m_Height: 0.7466604
+  m_Radius: 0.22
+  m_Height: 0.93
   m_Direction: 2
-  m_Center: {x: -0, y: 0.296875, z: -0.026646227}
+  m_Center: {x: -0, y: 0.35, z: 0}
 --- !u!1 &3303049374809835100 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -7793902246011408729, guid: 1453688a4e2a7dd488216a7054e4642b,

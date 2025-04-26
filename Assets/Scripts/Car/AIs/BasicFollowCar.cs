@@ -8,6 +8,8 @@ public class BasicFollowCar : CarAI
 {
     private ITrait Trait1;
     private ITrait Trait2;
+    public ScriptableObject Trait1SO;
+    public ScriptableObject Trait2SO;
     public float SteerSpeed = 5f;
 
     [Range(0, 1)]
@@ -15,8 +17,12 @@ public class BasicFollowCar : CarAI
 
     public override void SetUp(CarControl car)
     {
-        Trait1 = TraitManager.instance.GetTrait(Trait1Type);
-        Trait2 = TraitManager.instance.GetTrait(Trait2Type);
+        
+        Trait1SO = TraitManager.instance.GetTraitSO(Trait1Type);
+        Trait2SO = TraitManager.instance.GetTraitSO(Trait2Type);
+        Trait1 = Trait1SO as ITrait;
+        Trait2 = Trait2SO as ITrait;
+
         Trait1.ApplyTrait(car);
         Trait2.ApplyTrait(car);
     }

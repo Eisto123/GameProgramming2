@@ -39,4 +39,16 @@ public class TraitManager : MonoBehaviour
         }
         return null;
     }
+    public ScriptableObject GetTraitSO(CarTraits traitType)
+    {
+        foreach (var trait in traitSOs)
+        {
+            ITrait traitSO = trait as ITrait;
+            if (traitSO != null && traitSO.Trait == traitType)
+            {
+                return trait;
+            }
+        }
+        return null;
+    }
 }

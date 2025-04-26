@@ -286,8 +286,8 @@ public class BiomeGen : MonoBehaviour
             bool ifOnRoad = false;
             foreach (Vector3 point in pathPoints)
             {
-                if (x > point.x - pathRadius && x < point.x + pathRadius 
-                    && z > point.z - pathRadius && z < point.z + pathRadius)
+                if (x > point.x - pathRadius - 2 && x < point.x + pathRadius + 2
+                    && z > point.z - pathRadius - 2 && z < point.z + pathRadius + 2)
                 {
                     ifOnRoad = true;
                     break;
