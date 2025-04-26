@@ -201,10 +201,10 @@ public class BiomeGen : MonoBehaviour
 
     private BiomeType GetBiome(float temperature, float humidity)
     {
-        if (temperature < 0.45f && humidity < 0.45f) return BiomeType.SnowyTundra;
+        if (temperature < 0.45f && humidity < 0.5f) return BiomeType.SnowyTundra;
+        if (temperature >= 0.45f && humidity < 0.5f) return BiomeType.DryPlateau;
         if (temperature < 0.45f && humidity > 0.6f) return BiomeType.Wetlands;
-        if (temperature > 0.45f && humidity < 0.45f) return BiomeType.DryPlateau;
-        if (temperature > 0.6f && humidity > 0.45f) return BiomeType.Tropical;
+        if (temperature > 0.55f && humidity > 0.5f) return BiomeType.Tropical;
 
         return BiomeType.TemperateForest;
     }

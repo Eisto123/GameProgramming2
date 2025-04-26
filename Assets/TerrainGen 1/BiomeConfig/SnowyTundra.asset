@@ -38,6 +38,6 @@ MonoBehaviour:
   - {r: 0.836478, g: 0.836478, b: 0.836478, a: 0}
   - {r: 1, g: 1, b: 1, a: 0}
   - {r: 0.6147765, g: 0.6289307, b: 0.6111307, a: 0}
-  treeDensity: 0
+  treeDensity: 0.255
   grassDensity: 0.281
   plantDensity: 0.282
