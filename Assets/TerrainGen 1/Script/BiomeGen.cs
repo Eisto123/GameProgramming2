@@ -312,7 +312,8 @@ public class BiomeGen : MonoBehaviour
                         GameObject prefab = config.treePrefabs[Random.Range(0, config.treePrefabs.Count)];
                         GameObject obj = Instantiate(prefab, hit.point, Quaternion.identity, trees.transform);
                         obj.layer = LayerMask.NameToLayer("Tree");
-                        obj.AddComponent<BoxCollider>();
+                        CapsuleCollider col = obj.AddComponent<CapsuleCollider>();
+                        //col.radius = 0.7f;
                         NavMeshObstacle obs = obj.AddComponent<NavMeshObstacle>();
                         obs.shape = NavMeshObstacleShape.Capsule;
                         break;
@@ -334,12 +335,12 @@ public class BiomeGen : MonoBehaviour
                     case 3: // food
                         obj = Instantiate(normalFood, hit.point, Quaternion.identity, food.transform);
                         obj.layer = LayerMask.NameToLayer("Food");
-                        obj.AddComponent<BoxCollider>();
+                        obj.AddComponent<CapsuleCollider>();
                         break;
                     case 4: // coolor food
                         obj = Instantiate(colorFood, hit.point, Quaternion.identity, food.transform);
                         obj.layer = LayerMask.NameToLayer("ColorFood");
-                        obj.AddComponent<BoxCollider>();
+                        obj.AddComponent<CapsuleCollider>();
                         break;
                 }
                 placed++;

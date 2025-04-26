@@ -4,7 +4,7 @@ using Cinemachine;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.SceneManagement;
-using UnityEngine.Splines;
+using StarterAssets;
 
 public class UIManager : MonoBehaviour
 {
@@ -15,6 +15,8 @@ public class UIManager : MonoBehaviour
     public PlacePath paths;
     public GameObject carChooseMenu;
     public GameObject gameMenu;
+    public GameObject player;
+    public PlayerController playerControl;
 
     void Awake()
     {
@@ -22,6 +24,7 @@ public class UIManager : MonoBehaviour
         director.gameObject.SetActive(false);
         carChooseMenu.SetActive(false);
         gameMenu.SetActive(false);
+        player.SetActive(false);
     }
 
     void OnTimelineStopped(PlayableDirector pd)
@@ -34,13 +37,6 @@ public class UIManager : MonoBehaviour
     public void PlayStartAnim()
     {
         SetCameras();
-        StartCoroutine(PlayAnim());
-    }
-
-    private IEnumerator PlayAnim()
-    {
-        yield return new WaitForSeconds(1);
-
         director.gameObject.SetActive(true);
         director.Play();
     }
@@ -56,17 +52,35 @@ public class UIManager : MonoBehaviour
             Vector3 rotation = cameras[i].transform.rotation.eulerAngles;
             cameras[i].transform.rotation = Quaternion.Euler(26,rotation.y,rotation.z);
         }
+        player.transform.position = knots[0]+new Vector3(50,20,50);
     }
 
     public void ConfirmCar()
     {
         carChooseMenu.SetActive(false);
         gameMenu.SetActive(true);
+        player.SetActive(true);
     }
 
     public void RestartGame()
     {
         string scene = SceneManager.GetActiveScene().name;
         SceneManager.LoadScene(scene);
+    }
+
+    public void ChangeView(int view)
+    {
+        if (view == 0) // car
+        {
+            cameraCar.Priority = 12;
+            cameraPlayer.Priority = 10;
+            playerControl.enabled = false;
+        }
+        else // player
+        {
+            cameraCar.Priority = 10;
+            cameraPlayer.Priority = 12;
+            playerControl.enabled = true;
+        }
     }
 }
