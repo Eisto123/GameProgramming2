@@ -21,6 +21,7 @@ namespace StarterAssets
 		public float SprintSpeed = 6.0f;
 		[Tooltip("Rotation speed of the character")]
 		public float RotationSpeed = 1.0f;
+		public float pitchSpeed = 1;
 		[Tooltip("Acceleration and deceleration")]
 		public float SpeedChangeRate = 10.0f;
 
@@ -163,7 +164,8 @@ namespace StarterAssets
 				CameraRotation();
 			}
 			else
-				CameraRotationFly();
+				//CameraRotationFly();
+				CameraRotation();
 		}
 
 		private void FlyCheck()
@@ -221,24 +223,29 @@ namespace StarterAssets
 		private void CameraRotation()
 		{
 			// if there is an input
-			if (_input.look.sqrMagnitude >= _threshold)
-			{
-				//Don't multiply mouse input by Time.deltaTime
-				float deltaTimeMultiplier = IsCurrentDeviceMouse ? 1.0f : Time.deltaTime;
+			// if (_input.look.sqrMagnitude >= _threshold)
+			// {
+			// 	//Don't multiply mouse input by Time.deltaTime
+			// 	//float deltaTimeMultiplier = IsCurrentDeviceMouse ? 1.0f : Time.deltaTime;
 				
-				_cinemachineTargetPitch += _input.look.y * RotationSpeed * deltaTimeMultiplier;
-				_rotationVelocity = _input.look.x * RotationSpeed * deltaTimeMultiplier;
-				_cinemachineTargetYaw += _rotationVelocity;
+			// 	//_cinemachineTargetPitch += _input.move.y * RotationSpeed * deltaTimeMultiplier;
+			// 	_rotationVelocity = _input.move.x * RotationSpeed * Time.deltaTime;
+			// 	_cinemachineTargetYaw += _rotationVelocity;
 
-				// clamp our pitch rotation
-				_cinemachineTargetPitch = ClampAngle(_cinemachineTargetPitch, BottomClamp, TopClamp);
+			// 	// clamp our pitch rotation
+			// 	_cinemachineTargetPitch = ClampAngle(_cinemachineTargetPitch, BottomClamp, TopClamp);
 
-				// Update Cinemachine camera target pitch
-				CinemachineCameraTarget.transform.localRotation = UnityEngine.Quaternion.Euler(_cinemachineTargetPitch, 0.0f, 0.0f);
+			// 	// Update Cinemachine camera target pitch
+			// 	//CinemachineCameraTarget.transform.localRotation = UnityEngine.Quaternion.Euler(_cinemachineTargetPitch, 0.0f, 0.0f);
 
-				// rotate the player left and right
-				transform.Rotate(UnityEngine.Vector3.up * _rotationVelocity);
-			}
+			// 	// rotate the player left and right
+			// 	//transform.Rotate(UnityEngine.Vector3.up * _rotationVelocity);
+			// 	transform.rotation *= UnityEngine.Quaternion.Euler(UnityEngine.Vector3.up * _rotationVelocity);
+			// 	//transform.Rotate(UnityEngine.Vector3.up * _rotationVelocity);
+			// }
+
+			_rotationVelocity = _input.move.x * RotationSpeed * Time.deltaTime;
+			transform.rotation *= UnityEngine.Quaternion.Euler(UnityEngine.Vector3.up * _rotationVelocity);
 		}
 
 		private void CameraRotationFly()
@@ -306,15 +313,17 @@ namespace StarterAssets
 
 			// note: UnityEngine.Vector2's != operator uses approximation so is not floating point error prone, and is cheaper than magnitude
 			// if there is a move input rotate player when the player is moving
-			if (_input.move != UnityEngine.Vector2.zero)
+			if (_input.move.y != 0)
 			{
 				// move
-				inputDirection = transform.right * _input.move.x + transform.forward * _input.move.y;
+				//inputDirection = transform.right * _input.move.x + transform.forward * _input.move.y;
+				inputDirection = transform.forward * _input.move.y;
 				_animator.SetBool("walk", true);
 				_animator.SetBool("idle", false);
 			}
 			else
 			{
+				inputDirection = UnityEngine.Vector3.zero;
 				_animator.SetBool("idle", true);
 				_animator.SetBool("walk", false);
 			}
@@ -323,51 +332,68 @@ namespace StarterAssets
 			_controller.Move(inputDirection.normalized * (_speed * Time.deltaTime) + new UnityEngine.Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);
 		}
 
+		// private void Fly()
+		// {
+		// 	float targetSpeed = FlySpeed;
+
+		// 	// a simplistic acceleration and deceleration designed to be easy to remove, replace, or iterate upon
+
+		// 	// note: UnityEngine.Vector2's == operator uses approximation so is not floating point error prone, and is cheaper than magnitude
+		// 	// if there is no input, set the target speed to 0
+		// 	if (_input.move == UnityEngine.Vector2.zero) targetSpeed = 0.0f;
+
+		// 	// a reference to the players current horizontal velocity
+		// 	float currentHorizontalSpeed = new UnityEngine.Vector3(_controller.velocity.x, 0.0f, _controller.velocity.z).magnitude;
+
+		// 	float speedOffset = 0.1f;
+		// 	float inputMagnitude = _input.analogMovement ? _input.move.magnitude : 1f;
+
+		// 	// accelerate or decelerate to target speed
+		// 	if (currentHorizontalSpeed < targetSpeed - speedOffset || currentHorizontalSpeed > targetSpeed + speedOffset)
+		// 	{
+		// 		// creates curved result rather than a linear one giving a more organic speed change
+		// 		// note T in Lerp is clamped, so we don't need to clamp our speed
+		// 		_speed = Mathf.Lerp(currentHorizontalSpeed, targetSpeed * inputMagnitude, Time.deltaTime * SpeedChangeRate);
+
+		// 		// round speed to 3 decimal places
+		// 		_speed = Mathf.Round(_speed * 1000f) / 1000f;
+		// 	}
+		// 	else
+		// 	{
+		// 		_speed = targetSpeed;
+		// 	}
+
+		// 	// normalise input direction
+		// 	UnityEngine.Vector3 inputDirection = new UnityEngine.Vector3(_input.move.x, 0.0f, _input.move.y).normalized;
+
+		// 	// note: UnityEngine.Vector2's != operator uses approximation so is not floating point error prone, and is cheaper than magnitude
+		// 	// if there is a move input rotate player when the player is moving
+		// 	if (_input.move != UnityEngine.Vector2.zero)
+		// 	{
+		// 		// move, only fly forward, no left and right
+		// 		inputDirection = transform.forward * Mathf.Clamp(_input.move.y,0,1);
+		// 	}
+
+		// 	// move the player
+		// 	_controller.Move(inputDirection.normalized * (_speed * Time.deltaTime));
+		
+		// }
+
+		
 		private void Fly()
 		{
-			float targetSpeed = FlySpeed;
+			float speed = FlySpeed;
 
-			// a simplistic acceleration and deceleration designed to be easy to remove, replace, or iterate upon
+			float pitchInput = -_input.move.y;
+			float pitchAmount = pitchInput * pitchSpeed * Time.deltaTime;
 
-			// note: UnityEngine.Vector2's == operator uses approximation so is not floating point error prone, and is cheaper than magnitude
-			// if there is no input, set the target speed to 0
-			if (_input.move == UnityEngine.Vector2.zero) targetSpeed = 0.0f;
+			_cinemachineTargetPitch += pitchAmount;
+			_cinemachineTargetPitch = Mathf.Clamp(_cinemachineTargetPitch, -45f, 45f);
 
-			// a reference to the players current horizontal velocity
-			float currentHorizontalSpeed = new UnityEngine.Vector3(_controller.velocity.x, 0.0f, _controller.velocity.z).magnitude;
+			transform.rotation = UnityEngine.Quaternion.Euler(_cinemachineTargetPitch, transform.eulerAngles.y, 0f);
 
-			float speedOffset = 0.1f;
-			float inputMagnitude = _input.analogMovement ? _input.move.magnitude : 1f;
-
-			// accelerate or decelerate to target speed
-			if (currentHorizontalSpeed < targetSpeed - speedOffset || currentHorizontalSpeed > targetSpeed + speedOffset)
-			{
-				// creates curved result rather than a linear one giving a more organic speed change
-				// note T in Lerp is clamped, so we don't need to clamp our speed
-				_speed = Mathf.Lerp(currentHorizontalSpeed, targetSpeed * inputMagnitude, Time.deltaTime * SpeedChangeRate);
-
-				// round speed to 3 decimal places
-				_speed = Mathf.Round(_speed * 1000f) / 1000f;
-			}
-			else
-			{
-				_speed = targetSpeed;
-			}
-
-			// normalise input direction
-			UnityEngine.Vector3 inputDirection = new UnityEngine.Vector3(_input.move.x, 0.0f, _input.move.y).normalized;
-
-			// note: UnityEngine.Vector2's != operator uses approximation so is not floating point error prone, and is cheaper than magnitude
-			// if there is a move input rotate player when the player is moving
-			if (_input.move != UnityEngine.Vector2.zero)
-			{
-				// move, only fly forward, no left and right
-				inputDirection = transform.forward * Mathf.Clamp(_input.move.y,0,1);
-			}
-
-			// move the player
-			_controller.Move(inputDirection.normalized * (_speed * Time.deltaTime));
-		
+			UnityEngine.Vector3 moveDirection = transform.forward;
+			_controller.Move(moveDirection.normalized * (speed * Time.deltaTime));
 		}
 
 		private void JumpAndGravity()
