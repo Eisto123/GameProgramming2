@@ -177,6 +177,7 @@ public class PlacePath : MonoBehaviour
                 Debug.LogError("No terrain found at knot position");
             }
         }
+        Fence.GetComponent<SplineInstantiate>().enabled = true;
         GenerateFinishLine();
 
         // map to terrain heightmap

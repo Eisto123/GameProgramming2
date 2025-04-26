@@ -86,6 +86,10 @@ public class CarControl : MonoBehaviour
                 RangeTimer = 0f; // Reset the timer after logging
             }
         }
+        else
+        {
+            RangeTimer = 0f; // Reset the timer when the car is within range
+        }
     }
 
     void FixedUpdate()
@@ -266,11 +270,12 @@ public class CarControl : MonoBehaviour
         if (other.CompareTag("FinishLine"))
         {
             CurrentLap++;
-            StartCoroutine(LapIgnore(2f)); // Ignore collisions with the finish line for 2 seconds
             if (CurrentLap >= GameManager.instance.totalLaps)
             {
                 finishedLine = true;
             }
+            StartCoroutine(LapIgnore(2f)); // Ignore collisions with the finish line for 2 seconds
+            
         }
     }
     IEnumerator LapIgnore(float time)
