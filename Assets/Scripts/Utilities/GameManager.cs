@@ -7,6 +7,7 @@ using UnityEngine.Events;
 
 public class GameManager : MonoBehaviour
 {
+    public static GameManager instance;
     public TrackPoints trackPointsEvent;
     public int totalLaps = 10;
     public bool noWinnerYet = true;
@@ -16,6 +17,17 @@ public class GameManager : MonoBehaviour
     public bool GameEnded = false;
     public UnityEvent OnGameEndEvent;
 
+    void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
     void OnEnable()
     {
         trackPointsEvent.trackPointsEvent += OnTrackPointsEvent;

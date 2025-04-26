@@ -14,5 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Trait1Type: 0
   Trait2Type: 0
+  name: Green
+  Trait1SO: {fileID: 0}
+  Trait2SO: {fileID: 0}
   SteerSpeed: 0.8
   PowerSpeed: 1

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -40,11 +41,11 @@ public class LeaderUIManager : MonoBehaviour
         {
             CarControl car = cars[i];
 
-            GameObject entry = Instantiate(carRankingTextTemplate, rankingPanel.transform);
+            GameObject entry = Instantiate(carRankingTextTemplate, rankingPanel.transform,false);
             entry.SetActive(true);
 
             TMP_Text textComponent = entry.GetComponent<TMP_Text>();
-            textComponent.text = $"{i + 1}. {car.name} - Lap {car.CurrentLap}";
+            textComponent.text = $"{i + 1}. {car.carAI.name} - Lap {car.CurrentLap} Traits: {car.carAI.Trait1Type} {car.carAI.Trait2Type} ";
 
             currentEntries.Add(entry);
         }

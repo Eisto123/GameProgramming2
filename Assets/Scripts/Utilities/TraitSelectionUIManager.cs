@@ -35,7 +35,7 @@ public class TraitSelectionUIManager : MonoBehaviour
 
         foreach (var trait in currentOptions)
         {
-            GameObject buttonGO = Instantiate(traitPanel, traitButtonContainer);
+            GameObject buttonGO = Instantiate(traitPanel, traitButtonContainer,true);
             TMP_Text[] texts = buttonGO.GetComponentsInChildren<TMP_Text>();
             texts[0].text = trait.Trait.ToString();
             texts[1].text = trait.Description;

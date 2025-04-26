@@ -28,7 +28,7 @@ public class EndPanelUIManager : MonoBehaviour
         }
         for(int i = 0; i < 2; i++)
         {
-            GameObject traitGO = Instantiate(traitPrefab, traitContainer.transform);
+            GameObject traitGO = Instantiate(traitPrefab, traitContainer.transform, false);
             TMP_Text[] texts = traitGO.GetComponentsInChildren<TMP_Text>();
             texts[0].text = TraitManager.instance.PlayerSelectedTrait[i].Trait.ToString();
             texts[1].text = TraitManager.instance.PlayerSelectedTrait[i].Description;

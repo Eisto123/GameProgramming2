@@ -6,6 +6,7 @@ using AlanZucconi.AI.BT;
                      menuName = "CarAI/BasicFollowCar")]
 public class BasicFollowCar : CarAI
 {
+    public string AIName;
     private ITrait Trait1;
     private ITrait Trait2;
     public ScriptableObject Trait1SO;
@@ -29,6 +30,13 @@ public class BasicFollowCar : CarAI
     public override Node CreateBehaviourTree(CarControl car)
     {
         return new Selector(
+            new Filter(
+                ()=>{return car.finishedLine;},
+                new Action
+                    (
+                        () => car.HitBrake()
+                    )   
+            ),
             new Filter(
                 ()=>{return car.isSavageDriver;},
                 new Selector(

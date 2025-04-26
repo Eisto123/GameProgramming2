@@ -30,6 +30,7 @@ public class CarControl : MonoBehaviour
     public int trackPointsOffset = 0;
     public int respawnTreshold = 5;
     public int CurrentLap = 0;
+    public bool finishedLine = false;
 
     public CarAI carAI;
     private BehaviourTree Tree;
@@ -266,7 +267,10 @@ public class CarControl : MonoBehaviour
         {
             CurrentLap++;
             StartCoroutine(LapIgnore(2f)); // Ignore collisions with the finish line for 2 seconds
-            // Handle finish line logic here
+            if (CurrentLap >= GameManager.instance.totalLaps)
+            {
+                finishedLine = true;
+            }
         }
     }
     IEnumerator LapIgnore(float time)
