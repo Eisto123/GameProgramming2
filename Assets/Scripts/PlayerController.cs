@@ -66,7 +66,8 @@ namespace StarterAssets
 
 		[Header("Movement Bounds")]
 		public UnityEngine.Vector3 BoundCenter = UnityEngine.Vector3.zero;
-		public UnityEngine.Vector3 BoundSize = new UnityEngine.Vector3(256f, 20f, 256f);
+		public UnityEngine.Vector3 flyBoundSize = new UnityEngine.Vector3(240f, 20f, 240f);
+		public UnityEngine.Vector3 walkBoundSize = new UnityEngine.Vector3(250f, 100f, 250f);
 
 		// cinemachine
 		private float _cinemachineTargetPitch;
@@ -142,12 +143,13 @@ namespace StarterAssets
 				JumpAndGravity();
 				GroundedCheck();
 				Move();
+				ClampPositionInBounds(walkBoundSize);
 			}
 			else
 			{
 				//Debug.Log("is fly");
 				Fly();
-				ClampPositionInBounds();
+				ClampPositionInBounds(flyBoundSize);
 				FlyGroundCheck();
 			}
 		}
@@ -423,9 +425,9 @@ namespace StarterAssets
 			return Mathf.Clamp(lfAngle, lfMin, lfMax);
 		}
 
-		private void ClampPositionInBounds()
+		private void ClampPositionInBounds(UnityEngine.Vector3 boundSize)
 		{
-			Bounds bounds = new Bounds(BoundCenter, BoundSize);
+			Bounds bounds = new Bounds(BoundCenter, boundSize);
 
 			UnityEngine.Vector3 clampedPosition = transform.position;
 			clampedPosition.x = Mathf.Clamp(clampedPosition.x, bounds.min.x, bounds.max.x);
@@ -454,7 +456,7 @@ namespace StarterAssets
 			Gizmos.color = transparentRed;
             Gizmos.DrawSphere(transform.position+new UnityEngine.Vector3(0,1,0), flyGroundRadius);
 
-			//Gizmos.DrawCube(BoundCenter, BoundSize);
+			//Gizmos.DrawCube(BoundCenter, flyBoundSize);
 
         }
 

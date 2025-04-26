@@ -93,10 +93,19 @@ public class PlacePath : MonoBehaviour
         var knotArray = splineContainer.Spline.ToArray();
         for(int i = 0; i<knotArray.Count(); i++){
             var knot = knotArray[i];
-            knot.Position = knot.Position + new float3(UnityEngine.Random.Range(-randomRange,randomRange),0,UnityEngine.Random.Range(-randomRange,randomRange));
+            var currPos = knot.Position;
+            knot.Position = currPos + new float3(UnityEngine.Random.Range(-randomRange,randomRange),0,UnityEngine.Random.Range(-randomRange,randomRange));
+            Vector3 worldPos = splineContainer.transform.TransformPoint(knot.Position);
+            while (worldPos.x < 10 || worldPos.x > terrain.terrainData.size.x-20 || worldPos.z < 20 || worldPos.z > terrain.terrainData.size.z-10 )
+            {
+                knot.Position = currPos + new float3(UnityEngine.Random.Range(-randomRange,randomRange),0,UnityEngine.Random.Range(-randomRange,randomRange));
+                worldPos = splineContainer.transform.TransformPoint(knot.Position);
+            }
             
             splineContainer.Splines[0].SetKnot(i,knot);
         }
+
+
     }
 
     Vector3[] knotPositions;

@@ -33,8 +33,9 @@ MonoBehaviour:
   - {fileID: 919132149155446097, guid: 7ff460ec460874549be004adb2a16a40, type: 3}
   - {fileID: 919132149155446097, guid: c7c756ffa694aca44b78d8e81e072e00, type: 3}
   rockPrefabs: []
-  treeColor: {r: 0, g: 0, b: 0, a: 0}
-  grassMat: {fileID: 0}
+  treeColors:
+  - {r: 0.21957184, g: 0.76729554, b: 0.23000318, a: 0}
+  - {r: 0.685669, g: 0.8050314, b: 0.28606457, a: 1}
   treeDensity: 0.5
   grassDensity: 0.806
   plantDensity: 0.709

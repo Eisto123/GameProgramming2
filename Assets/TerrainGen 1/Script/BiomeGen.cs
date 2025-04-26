@@ -126,6 +126,9 @@ public class BiomeGen : MonoBehaviour
         pathPoints = paths.GetKnotPositions();
         pathRadius = paths.GetPathRadius() - 3;
 
+        tempSeed = Random.Range(int.MinValue, int.MaxValue);
+        humiditySeed = Random.Range(int.MinValue, int.MaxValue);
+
         GenerateBiomeMap();
         RenderBiomeMap(biomeRenderTexture);
         PlaceObjs(treeCount, 0, treeRadius);
@@ -316,6 +319,16 @@ public class BiomeGen : MonoBehaviour
                         //col.radius = 0.7f;
                         NavMeshObstacle obs = obj.AddComponent<NavMeshObstacle>();
                         obs.shape = NavMeshObstacleShape.Capsule;
+
+                        // change color
+                        MeshRenderer renderer = obj.GetComponent<MeshRenderer>();
+                        foreach (Material mat in renderer.materials)
+                        {
+                            if (mat.name.Contains("leafsGreen"))
+                            {
+                                mat.color = config.treeColors[Random.Range(0, config.treeColors.Count)];
+                            }
+                        }
                         break;
                     case 1: // grass
                         prefab = config.grassPrefab;

@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   biomeType: 2
   treePrefabs:
-  - {fileID: 919132149155446097, guid: 53948440c4085d849b3cf712b547a207, type: 3}
-  - {fileID: 919132149155446097, guid: d5eede83add22234ebc5b891b3dc8eff, type: 3}
+  - {fileID: 919132149155446097, guid: 8632d2dddeec6564191e88c2db33090f, type: 3}
+  - {fileID: 919132149155446097, guid: 4b2c679d1b894a3439451f80ebe2fe84, type: 3}
   - {fileID: 919132149155446097, guid: 7e0a8563ca0973d4f814e48310fe8089, type: 3}
   grassPrefab: {fileID: 1600673460677038256, guid: f422129799198854da01d679607f6701,
     type: 3}
@@ -37,8 +37,9 @@ MonoBehaviour:
   - {fileID: 919132149155446097, guid: 5df20512f03870f4698f25077dedcb7f, type: 3}
   - {fileID: 919132149155446097, guid: d2c66b9cb9a099142b5e1993daee22c2, type: 3}
   rockPrefabs: []
-  treeColor: {r: 0, g: 0, b: 0, a: 0}
-  grassMat: {fileID: 0}
+  treeColors:
+  - {r: 0.37106904, g: 0.73464185, b: 0.74213827, a: 0}
+  - {r: 0.20946555, g: 0.55229557, b: 0.5597484, a: 0}
   treeDensity: 0.4
   grassDensity: 0.7
   plantDensity: 0.7

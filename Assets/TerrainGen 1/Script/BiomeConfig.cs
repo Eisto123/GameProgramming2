@@ -22,8 +22,7 @@ public class BiomeConfig : ScriptableObject
     public GameObject grassPrefab;
     public List<GameObject> plantPrefabs;
     public List<GameObject> rockPrefabs;
-    public Color treeColor;
-    public Material grassMat;
+    public List<Color> treeColors;
     [Range(0f, 1f)] public float treeDensity = 0.5f;
     
     [Range(0f, 1f)] public float grassDensity = 0.7f;
