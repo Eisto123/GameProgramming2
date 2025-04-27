@@ -67,7 +67,7 @@ public class TraitSelectionUIManager : MonoBehaviour
 
         selectedTraits.Add(trait);
         buttonGO.GetComponentInChildren<Button>().interactable = false;
-        buttonGO.GetComponentInChildren<Image>().color = Color.red; // Change text color to gray
+        buttonGO.GetComponentInChildren<Image>().color = Color.green;
         if (selectedTraits.Count == traitsToChoose)
         {
             DisableAllButtons();
@@ -99,9 +99,14 @@ public class TraitSelectionUIManager : MonoBehaviour
     }
     public void RedoSelection()
     {
-        // Reset the selection and show the UI again
         selectedTraits.Clear();
-        traitButtonContainer.gameObject.SetActive(true);
-        ShowTraitSelection();
+        comfirmButton.interactable = false;
+        foreach (var trait in currentOptions)
+        {
+            GameObject buttonGO = traitPanels[currentOptions.IndexOf(trait)];
+            buttonGO.GetComponentInChildren<Button>().interactable = true;
+            buttonGO.GetComponentInChildren<Image>().color = Color.white;
+        }
+        
     }
 }

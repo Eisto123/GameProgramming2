@@ -26,7 +26,7 @@ public class CarControl : MonoBehaviour
     public TrackPoints trackPointsEvent;
     private Vector3[] trackPoints;
     public Vector3 currentTrackPoint;
-    private Vector3 closestTrackPoint;
+    public Vector3 closestTrackPoint;
     public int trackPointsOffset = 0;
     public int respawnTreshold = 5;
     public int CurrentLap = 0;

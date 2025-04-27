@@ -93,8 +93,8 @@ public class GameManager : MonoBehaviour
         }
 
         // If laps are equal, compare checkpoint index
-        int indexA = GetCheckpointIndex(a.currentTrackPoint);
-        int indexB = GetCheckpointIndex(b.currentTrackPoint);
+        int indexA = GetCheckpointIndex(a.closestTrackPoint);
+        int indexB = GetCheckpointIndex(b.closestTrackPoint);
 
         return indexB.CompareTo(indexA); // Descending
     }
