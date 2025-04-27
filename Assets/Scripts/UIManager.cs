@@ -54,7 +54,7 @@ public class UIManager : MonoBehaviour
             Vector3 rotation = cameras[i].transform.rotation.eulerAngles;
             cameras[i].transform.rotation = Quaternion.Euler(26,rotation.y,rotation.z);
         }
-        player.transform.position = new Vector3(128,knots[0].y+20,128);
+        player.transform.position = new Vector3(128,knots[0].y+50,128);
     }
 
     public void ConfirmCar()
