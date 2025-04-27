@@ -40,6 +40,7 @@ public class CarControl : MonoBehaviour
     public LayerMask detectionLayer;
     [HideInInspector] public bool isSavageDriver = false;
     [HideInInspector] public bool isAnimalKiller = false;
+    [HideInInspector] public Vector3 ObsticlePos;
 
 
     void OnEnable()
@@ -224,7 +225,7 @@ public class CarControl : MonoBehaviour
             }
         }
     }
-    private string DetectObjectsInFront()
+    private GameObject DetectObjectsInFront()
     {
         Collider[] rangeChecks = Physics.OverlapSphere(transform.position, detectionRadius, detectionLayer);
 
@@ -235,7 +236,7 @@ public class CarControl : MonoBehaviour
 
             if (Vector3.Angle(transform.forward, directionToTarget) < detectionAngle / 2)
             {
-                return target.tag;
+                return target.gameObject;
             }
             
         }
@@ -370,28 +371,39 @@ public class CarControl : MonoBehaviour
     }
     public bool isObsticleFront()
     {
-        String tag = DetectObjectsInFront();
-        if((tag == "Untagged") && !isFacingBackWard())
-        {
-            return true;
+        GameObject obj = DetectObjectsInFront();
+        if(obj!=null){
+            if(obj.CompareTag("Untagged") && !isFacingBackWard())
+            {
+                ObsticlePos = obj.transform.position;
+                return true;
+            }
         }
+        
         return false;
     }
     public bool isFenceInFront()
     {
-        String tag = DetectObjectsInFront();
-        if(tag == "Fence" && !isFacingBackWard())
-        {
-            return true;
+        GameObject obj = DetectObjectsInFront();
+        
+        if(obj!=null){
+            if(obj.CompareTag("Fence") && !isFacingBackWard())
+            {
+                ObsticlePos = obj.transform.position;
+                return true;
+            }
         }
         return false;
     }
     public bool isRabbitInFront()
     {
-        String tag = DetectObjectsInFront();
-        if(tag == "Rabbit" && !isFacingBackWard())
-        {
-            return true;
+        GameObject obj = DetectObjectsInFront();
+        if(obj!=null){
+            if(obj.CompareTag("Rabbit") && !isFacingBackWard())
+            {
+                ObsticlePos = obj.transform.position;
+                return true;
+            }
         }
         return false;
     }

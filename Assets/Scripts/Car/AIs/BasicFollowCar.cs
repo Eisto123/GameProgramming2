@@ -65,20 +65,59 @@ public class BasicFollowCar : CarAI
             ),
             new Filter(
                 ()=>{return car.isObsticleFront();},
-                new Action
-                    (
-                        () => car.TurnRight(0.5f)
-                    )   
+                new Selector(
+                    new Filter(
+                        ()=>{return IsObsLeftThanCheckPoint(car);},
+                        new Action
+                        (
+                            () => car.TurnRight(PowerSpeed/2)
+                        )   
+                    ),
+                    new Action
+                        (
+                            () => car.TurnLeft(PowerSpeed/2)
+                        )   
+                )  
             ),
             new Filter(
                 ()=>{return car.isFenceInFront();},
                 new Action
                     (
-                        () => car.TurnRight(0f)
+                        () => car.TurnRight(0.2f)
                     )   
             ),
             new Action(() => car.MoveTowardsCurrentTrackPoint(SteerSpeed, PowerSpeed))
 
         );
+    }
+
+    public bool IsObsLeftThanCheckPoint(CarControl car)
+    {
+        Vector3 obsPos = car.ObsticlePos;
+        Vector3 checkPointPos = car.currentTrackPoint;
+        Vector3 playerLeft = -car.gameObject.transform.right;
+
+        // Direction vectors from player to points
+        Vector3 toTarget = (checkPointPos - car.gameObject.transform.position).normalized;
+        Vector3 toObstacle = (obsPos - car.gameObject.transform.position).normalized;
+
+        // Dot product with player's left
+        float targetLeftDot = Vector3.Dot(toTarget, playerLeft);
+        float obstacleLeftDot = Vector3.Dot(toObstacle, playerLeft);
+
+        // Compare
+        if (targetLeftDot > obstacleLeftDot)
+        {
+            return false;
+        }
+        else if (obstacleLeftDot > targetLeftDot)
+        {
+        
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 }

@@ -9,7 +9,7 @@ public class Tactician : ScriptableObject, ITrait
     public string Description => "You will be able to foresee the track better!";
     public void ApplyTrait(CarControl car)
     {
-        car.detectionRadius += 20f;
-        car.trackPointsOffset += 2;
+        
+        car.trackPointsOffset += 4;
     }
 }

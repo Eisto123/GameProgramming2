@@ -49,7 +49,7 @@ public class CarGenerator : MonoBehaviour
                 RandomCarTrait(car);
             }
             
-            PlaceCarOnPosition(car, trackPoints[trackPoints.Count-3] + new Vector3((i-2)*2,0.2f,0), quaternion.identity);
+            PlaceCarOnPosition(car, trackPoints[trackPoints.Count-10] + new Vector3((i-2)*2,0.2f,0), quaternion.identity);
         }
         GenerationComplete?.Invoke(trackPoints.ToArray());
         

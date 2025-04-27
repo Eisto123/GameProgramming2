@@ -14,6 +14,7 @@ public class TraitSelectionUIManager : MonoBehaviour
 
     private List<ITrait> selectedTraits = new List<ITrait>();
     private List<ITrait> currentOptions = new List<ITrait>();
+    public List<GameObject> traitPanels = new List<GameObject>();
 
     private void Start()
     {
@@ -28,14 +29,14 @@ public class TraitSelectionUIManager : MonoBehaviour
             currentOptions = GetRandomTraits(4);
         }
         
-        foreach (Transform child in traitButtonContainer)
-        {
-            Destroy(child.gameObject);
-        }
+        // foreach (Transform child in traitButtonContainer)
+        // {
+        //     Destroy(child.gameObject);
+        // }
 
         foreach (var trait in currentOptions)
         {
-            GameObject buttonGO = Instantiate(traitPanel, traitButtonContainer,true);
+            GameObject buttonGO = traitPanels[currentOptions.IndexOf(trait)];
             TMP_Text[] texts = buttonGO.GetComponentsInChildren<TMP_Text>();
             texts[0].text = trait.Trait.ToString();
             texts[1].text = trait.Description;

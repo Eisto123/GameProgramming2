@@ -291,7 +291,7 @@ public class Rabbit : MonoBehaviour
 
     private void OnCollisionEnter(Collision other) 
     {
-        if (other.gameObject.CompareTag("Car"))
+        if (other.gameObject.CompareTag("Car")||other.gameObject.CompareTag("Player"))
         {
             Die();
         }
