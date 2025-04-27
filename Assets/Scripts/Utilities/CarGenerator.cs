@@ -51,14 +51,12 @@ public class CarGenerator : MonoBehaviour
             
             PlaceCarOnPosition(car, trackPoints[trackPoints.Count-10] + new Vector3((i-2)*2,0.2f,0), quaternion.identity);
         }
-        GenerationComplete?.Invoke(trackPoints.ToArray());
-        
+        GenerationComplete?.Invoke(trackPoints.ToArray());  
     }
     private void PlaceCarOnPosition(GameObject car, Vector3 position, quaternion rotation){
         car.transform.position = position;
         car.transform.rotation = rotation;
     }
-
     private void RandomCarTrait(GameObject car){
         CarTraits traits1 = (CarTraits)UnityEngine.Random.Range(0, 9);
         CarTraits traits2 = (CarTraits)UnityEngine.Random.Range(0, 9);

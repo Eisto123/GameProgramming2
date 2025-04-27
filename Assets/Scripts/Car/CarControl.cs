@@ -42,6 +42,9 @@ public class CarControl : MonoBehaviour
     [HideInInspector] public bool isAnimalKiller = false;
     [HideInInspector] public Vector3 ObsticlePos;
 
+    private AudioSource audioSource;
+    public AudioClip engineSound;
+
 
     void OnEnable()
     {
@@ -61,6 +64,8 @@ public class CarControl : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
+        audioSource.clip = engineSound;
         placePath = FindObjectOfType<PlacePath>();
         rb = GetComponent<Rigidbody>();
         rb.centerOfMass = massCenter.transform.localPosition;
@@ -73,6 +78,20 @@ public class CarControl : MonoBehaviour
     {
         CheckIfFlipped();
         CheckOutSideRange();
+        CheckAudio();
+    }
+    private void CheckAudio()
+    {
+        audioSource.volume = Mathf.Clamp01(totalPower / maxPower);
+        audioSource.pitch = Mathf.Clamp01(totalPower / maxPower);
+        if (audioSource != null && !audioSource.isPlaying && verticalInput > 0.1f)
+        {
+            audioSource.Play();
+        }
+        if (audioSource != null && verticalInput < 0.1f)
+        {
+            audioSource.Pause();
+        }
     }
     private float RangeTimer;
     private void CheckOutSideRange()
