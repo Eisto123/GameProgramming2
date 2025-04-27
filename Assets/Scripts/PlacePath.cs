@@ -96,7 +96,7 @@ public class PlacePath : MonoBehaviour
             var currPos = knot.Position;
             knot.Position = currPos + new float3(UnityEngine.Random.Range(-randomRange,randomRange),0,UnityEngine.Random.Range(-randomRange,randomRange));
             Vector3 worldPos = splineContainer.transform.TransformPoint(knot.Position);
-            while (worldPos.x < 25 || worldPos.x > terrain.terrainData.size.x-25 || worldPos.z < 25 || worldPos.z > terrain.terrainData.size.z-25 )
+            while (worldPos.x < 15 || worldPos.x > terrain.terrainData.size.x-15 || worldPos.z < 15 || worldPos.z > terrain.terrainData.size.z-15 )
             {
                 knot.Position = currPos + new float3(UnityEngine.Random.Range(-randomRange,randomRange),0,UnityEngine.Random.Range(-randomRange,randomRange));
                 worldPos = splineContainer.transform.TransformPoint(knot.Position);
