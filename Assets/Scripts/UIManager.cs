@@ -16,6 +16,7 @@ public class UIManager : MonoBehaviour
     public GameObject carChooseMenu;
     public GameObject gameEndMenu;
     public GameObject gameMenu;
+    public GameObject wsadHint;
     public GameObject player;
     public PlayerController playerControl;
 
@@ -53,7 +54,7 @@ public class UIManager : MonoBehaviour
             Vector3 rotation = cameras[i].transform.rotation.eulerAngles;
             cameras[i].transform.rotation = Quaternion.Euler(26,rotation.y,rotation.z);
         }
-        player.transform.position = knots[0]+new Vector3(50,20,50);
+        player.transform.position = new Vector3(128,knots[0].y+20,128);
     }
 
     public void ConfirmCar()
@@ -69,7 +70,12 @@ public class UIManager : MonoBehaviour
     public void RestartGame()
     {
         string scene = SceneManager.GetActiveScene().name;
-        SceneManager.LoadScene(scene);
+        //SceneManager.LoadScene(scene);
+
+        PlayerPrefs.SetString("NextScene", scene);
+        PlayerPrefs.Save();
+
+        SceneManager.LoadScene("LoadingScene");
     }
 
     public void ChangeView(int view)
@@ -79,12 +85,14 @@ public class UIManager : MonoBehaviour
             cameraCar.Priority = 12;
             cameraPlayer.Priority = 10;
             playerControl.enabled = false;
+            wsadHint.SetActive(false);
         }
         else // player
         {
             cameraCar.Priority = 10;
             cameraPlayer.Priority = 12;
             playerControl.enabled = true;
+            wsadHint.SetActive(true);
         }
     }
     public void ShowGameEndMenu()

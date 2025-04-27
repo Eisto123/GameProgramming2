@@ -13,10 +13,12 @@ public class GenController : MonoBehaviour
     public TerrainPerlinGen mainTerrain;
     public BiomeGen biomeGen;
     public GenerateRabbits generateRabbits;
+    public UnityEvent onGenerationStart;
     public UnityEvent onGenerationComplete;
     // Start is called before the first frame update
     void Start()
     {
+        onGenerationStart?.Invoke();
         mainTerrain.ifRandomSeed = true;
         mainTerrain.StartGenerate();
         up.StartGenerate();

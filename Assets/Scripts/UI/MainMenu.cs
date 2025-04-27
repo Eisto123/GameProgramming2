@@ -20,6 +20,10 @@ public class StartMenu : MonoBehaviour
 
     public void StartButton()
     {
-        SceneManager.LoadScene(mainScene);
+        PlayerPrefs.SetString("NextScene", mainScene);
+        PlayerPrefs.Save();
+
+        SceneManager.LoadScene("LoadingScene");
+        //SceneManager.LoadScene(mainScene);
     }
 }
